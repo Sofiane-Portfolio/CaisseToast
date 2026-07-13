@@ -1,0 +1,176 @@
+<UserControl x:Class="CaisseToast.Wpf.Views.PosView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource Brush.Background}">
+    <Grid>
+        <Grid Visibility="{Binding ShowPayment, Converter={StaticResource InverseBoolToVis}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="380"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Ticket -->
+            <Border Grid.Column="0" Background="White" BorderBrush="#140B128C" BorderThickness="0,0,1,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Background="{StaticResource Brush.HeaderGradient}" Padding="18">
+                        <StackPanel>
+                            <TextBlock Text="{Binding TicketBadge}" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                            <TextBlock Text="{Binding TicketNumber}" Foreground="#D1EFFE" FontSize="12" Margin="0,4,0,0"/>
+                            <TextBox Text="{Binding TabName, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0"
+                                     Padding="8,6" FontSize="12" Background="#1AFFFFFF" Foreground="White"
+                                     BorderThickness="0" CaretBrush="White"/>
+                        </StackPanel>
+                    </Border>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding CartLines}" Margin="10">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="#EEF0F4" BorderThickness="0,0,0,1" Padding="10,8">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding DisplayName}" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}"/>
+                                                <TextBlock Text="{Binding StatusLabel}" FontSize="10" Foreground="{StaticResource Brush.Muted}"/>
+                                                <TextBlock Text="{Binding LineTotalLabel}" FontSize="12" Foreground="{StaticResource Brush.Blue}" Margin="0,4,0,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                                <Button Content="−" Width="28" Height="28" Margin="2" Command="{Binding DataContext.DecreaseQtyCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                                <TextBlock Text="{Binding Quantity}" Width="24" TextAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                                                <Button Content="+" Width="28" Height="28" Margin="2" Command="{Binding DataContext.IncreaseQtyCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <Border Grid.Row="2" Padding="16" BorderBrush="#EEF0F4" BorderThickness="0,1,0,0">
+                        <StackPanel>
+                            <Grid Margin="0,2"><TextBlock Text="Sous-total" Foreground="{StaticResource Brush.Muted}"/><TextBlock Text="{Binding SubtotalLabel}" HorizontalAlignment="Right" FontWeight="SemiBold"/></Grid>
+                            <Grid Margin="0,2"><TextBlock Text="TVA 10%" Foreground="{StaticResource Brush.Muted}"/><TextBlock Text="{Binding TaxLabel}" HorizontalAlignment="Right"/></Grid>
+                            <Grid Margin="0,8"><TextBlock Text="Total" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}"/><TextBlock Text="{Binding TotalLabel}" HorizontalAlignment="Right" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}" FontSize="16"/></Grid>
+                        </StackPanel>
+                    </Border>
+                    <UniformGrid Grid.Row="3" Columns="2" Margin="12">
+                        <Button Content="Envoyer cuisine" Style="{StaticResource Btn.Primary}" Margin="4" Command="{Binding SendKitchenCommand}"/>
+                        <Button Content="Mettre en attente" Margin="4" Padding="12,10" Command="{Binding HoldOrderCommand}"/>
+                        <Button Content="Addition" Margin="4" Padding="12,10" Command="{Binding RequestBillCommand}"/>
+                        <Button Content="Payer" Style="{StaticResource Btn.Primary}" Margin="4" Command="{Binding OpenPaymentCommand}"/>
+                        <Button Content="Annuler" Margin="4" Padding="12,10" Command="{Binding CancelSaleCommand}"/>
+                        <Button Content="Retour" Margin="4" Padding="12,10" Command="{Binding GoBackCommand}"/>
+                    </UniformGrid>
+                </Grid>
+            </Border>
+
+            <!-- Products -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Background="{StaticResource Brush.HeaderGradient}" Padding="20,14">
+                    <Grid>
+                        <TextBlock Text="Quick Order" FontSize="18" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Content="Tout" Margin="4,0" Padding="12,6" Command="{Binding SelectCategoryCommand}" CommandParameter="all"/>
+                            <Button Content="Plats" Margin="4,0" Padding="12,6" Command="{Binding SelectCategoryCommand}" CommandParameter="food"/>
+                            <Button Content="Boissons" Margin="4,0" Padding="12,6" Command="{Binding SelectCategoryCommand}" CommandParameter="drinks"/>
+                            <Button Content="Desserts" Margin="4,0" Padding="12,6" Command="{Binding SelectCategoryCommand}" CommandParameter="desserts"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <ScrollViewer Grid.Row="1" Padding="16" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Products}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Width="160" Height="200" Margin="6" Cursor="Hand"
+                                        Command="{Binding DataContext.AddProductCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="White" CornerRadius="14" BorderBrush="#140B128C" BorderThickness="1" Padding="10">
+                                                <StackPanel>
+                                                    <Border Height="90" CornerRadius="10" ClipToBounds="True" Margin="0,0,0,8">
+                                                        <Image Source="{Binding ImageUrl}" Stretch="UniformToFill"/>
+                                                    </Border>
+                                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}" TextTrimming="CharacterEllipsis"/>
+                                                    <TextBlock Text="{Binding PriceLabel}" Foreground="{StaticResource Brush.Blue}" FontWeight="SemiBold" Margin="0,4,0,0"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+
+        <!-- Modifier overlay -->
+        <Border Background="#CC000000" Visibility="{Binding ShowModifier, Converter={StaticResource BoolToVis}}">
+            <Border Background="White" CornerRadius="18" Padding="28" MaxWidth="460" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Text="Modificateurs" FontSize="20" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding ModifierProductName}" FontSize="14" Foreground="{StaticResource Brush.Blue}" HorizontalAlignment="Center" Margin="0,8,0,16"/>
+                    <ItemsControl ItemsSource="{Binding ModifierOptions}" Margin="0,0,0,16">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Margin="0,4" Padding="12,10" HorizontalContentAlignment="Left"
+                                        Command="{Binding DataContext.ToggleModifierCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="bd" CornerRadius="10" Padding="12,10" BorderThickness="2"
+                                                    BorderBrush="#EEF0F4" Background="#F8FBFF">
+                                                <TextBlock Text="{Binding Label}" FontWeight="SemiBold" Foreground="{StaticResource Brush.Navy}"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource Brush.Navy}"/>
+                                                </DataTrigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Button Content="Ajouter au ticket" Style="{StaticResource Btn.Primary}" Command="{Binding ConfirmModifierCommand}" Margin="0,0,0,8"/>
+                    <Button Content="Annuler" Command="{Binding CancelModifierCommand}"/>
+                </StackPanel>
+            </Border>
+        </Border>
+
+        <!-- Payment overlay -->
+        <Border Background="#CC000000" Visibility="{Binding ShowPayment, Converter={StaticResource BoolToVis}}">
+            <Border Background="White" CornerRadius="18" Padding="32" MaxWidth="420" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Text="Paiement" FontSize="22" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding TotalLabel}" FontSize="28" FontWeight="Bold" Foreground="{StaticResource Brush.Blue}" HorizontalAlignment="Center" Margin="0,12,0,20"/>
+                    <UniformGrid Columns="3" Margin="0,0,0,20">
+                        <Button Content="Carte" Margin="4" Padding="12,10" Command="{Binding SelectPaymentCommand}" CommandParameter="Carte"/>
+                        <Button Content="Espèces" Margin="4" Padding="12,10" Command="{Binding SelectPaymentCommand}" CommandParameter="Espèces"/>
+                        <Button Content="Mobile" Margin="4" Padding="12,10" Command="{Binding SelectPaymentCommand}" CommandParameter="Mobile"/>
+                    </UniformGrid>
+                    <Button Content="Confirmer le paiement" Style="{StaticResource Btn.Primary}" Command="{Binding ConfirmPaymentCommand}" Margin="0,0,0,8"/>
+                    <Button Content="Annuler" Command="{Binding CancelPaymentCommand}"/>
+                </StackPanel>
+            </Border>
+        </Border>
+    </Grid>
+</UserControl>

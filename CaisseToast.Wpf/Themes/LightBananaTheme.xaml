@@ -34,6 +34,9 @@
     </LinearGradientBrush>
 
     <conv:BoolToVisibilityConverter x:Key="BoolToVis"/>
+    <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVis"/>
+    <conv:TableStatusToBackgroundConverter x:Key="TableStatusBg"/>
+    <conv:TableStatusToForegroundConverter x:Key="TableStatusFg"/>
     <conv:PinDotFillConverter x:Key="PinDotFill"/>
     <conv:StringNotEmptyToVisibilityConverter x:Key="StringNotEmptyToVis"/>
 

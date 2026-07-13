@@ -133,12 +133,12 @@
                                     <TextBlock Text="Kiosk" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}" HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
-                            <Button Style="{StaticResource HeroTile}" Margin="4" IsEnabled="False" Opacity="0.5">
+                            <Button Style="{StaticResource HeroTile}" Margin="4" Command="{Binding OpenOnlineCommand}">
                                 <StackPanel>
-                                    <Border Width="44" Height="44" CornerRadius="12" Background="#CCC" HorizontalAlignment="Center" Margin="0,0,0,8">
+                                    <Border Width="44" Height="44" CornerRadius="12" Background="{StaticResource Brush.PrimaryButton}" HorizontalAlignment="Center" Margin="0,0,0,8">
                                         <TextBlock Text="O" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
-                                    <TextBlock Text="Online Ordering" FontWeight="Bold" Foreground="{StaticResource Brush.Muted}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Online Ordering" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}" HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
                         </UniformGrid>

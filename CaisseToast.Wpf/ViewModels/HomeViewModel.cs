@@ -8,6 +8,8 @@ namespace CaisseToast.Wpf.ViewModels;
 public partial class HomeViewModel : ObservableObject
 {
     private readonly IAuthService _auth;
+    private readonly IPosStateService _pos;
+    private readonly IPosLaunchService _launch;
     private readonly INavigationService _navigation;
 
     [ObservableProperty] private string _userName = "";
@@ -17,63 +19,57 @@ public partial class HomeViewModel : ObservableObject
     [ObservableProperty] private string _tablesInfo = "42";
     [ObservableProperty] private string _tablesSub = "32 libres";
 
-    public HomeViewModel(IAuthService auth, INavigationService navigation)
+    public HomeViewModel(IAuthService auth, IPosStateService pos, IPosLaunchService launch, INavigationService navigation)
     {
         _auth = auth;
+        _pos = pos;
+        _launch = launch;
         _navigation = navigation;
+        _pos.StateChanged += () => Refresh();
         Refresh();
     }
 
     public void Refresh()
     {
         UserName = _auth.CurrentEmployee?.Name ?? "—";
-        // Demo values — brancher sur OrderService plus tard
-        OpenOrders = "1";
-        PaidToday = "11";
-        Revenue = "171,52 €";
-        TablesInfo = "42";
-        TablesSub = "32 libres · 6 occupées";
+        OpenOrders = _pos.OpenOrderCount.ToString();
+        PaidToday = _pos.PaidTodayCount.ToString();
+        Revenue = $"{_pos.RevenueToday:N2} €";
+        TablesInfo = _pos.Tables.Count.ToString();
+        var c = _pos.GetTableCounts();
+        TablesSub = $"{c.free} libres · {c.occupied} occupées";
     }
 
     [RelayCommand]
-    private void OpenPos() => _navigation.ShowPlaceholder("Quick Order", "Prise de commande rapide — Phase 2");
+    private void OpenPos()
+    {
+        _launch.Clear();
+        _navigation.NavigateTo(AppScreen.Pos);
+    }
 
     [RelayCommand]
-    private void OpenTerminal() => _navigation.ShowPlaceholder("Payment Terminal", "Open · Paid · Closed — Phase 2");
+    private void OpenTerminal() => _navigation.NavigateTo(AppScreen.Terminal);
 
     [RelayCommand]
-    private void OpenTables() => _navigation.ShowPlaceholder("Table Service", "Plan de salle interactif — Phase 2");
+    private void OpenTables() => _navigation.NavigateTo(AppScreen.Tables);
 
     [RelayCommand]
-    private void OpenKitchen() => _navigation.ShowPlaceholder("Kitchen Display", "Tickets cuisine — Phase 2");
+    private void OpenKitchen() => _navigation.NavigateTo(AppScreen.Kitchen);
 
     [RelayCommand]
-    private void OpenKiosk() => _navigation.ShowPlaceholder("Kiosk", "Borne client — Phase 2");
+    private void OpenKiosk() => _navigation.NavigateTo(AppScreen.Kiosk);
 
     [RelayCommand]
-    private void OpenHub() => _navigation.ShowPlaceholder("Orders Hub", "Vue centralisée — Phase 2");
+    private void OpenHub() => _navigation.NavigateTo(AppScreen.OrdersHub);
+
+    [RelayCommand]
+    private void OpenOnline() => _navigation.NavigateTo(AppScreen.Online);
 
     [RelayCommand]
     private void SwitchUser()
     {
         _auth.Logout();
+        _pos.ClockOut();
         _navigation.NavigateTo(AppScreen.Login);
     }
-}
-
-public partial class PlaceholderViewModel : ObservableObject
-{
-    [ObservableProperty] private string _title;
-    [ObservableProperty] private string _subtitle;
-
-    public event Action? BackRequested;
-
-    public PlaceholderViewModel(string title, string subtitle)
-    {
-        _title = title;
-        _subtitle = subtitle;
-    }
-
-    [RelayCommand]
-    private void GoBack() => BackRequested?.Invoke();
 }

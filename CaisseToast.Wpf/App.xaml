@@ -9,7 +9,6 @@
                 <ResourceDictionary Source="Themes/LightBananaTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <!-- ViewModel → View -->
             <DataTemplate DataType="{x:Type vm:LoginViewModel}">
                 <v:LoginView/>
             </DataTemplate>
@@ -18,6 +17,36 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:PlaceholderViewModel}">
                 <v:PlaceholderView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:PosViewModel}">
+                <v:PosView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:TableServiceViewModel}">
+                <v:TableServiceView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:TerminalViewModel}">
+                <v:TerminalView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:KitchenViewModel}">
+                <v:KitchenView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:KioskViewModel}">
+                <v:KioskView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:OrdersHubViewModel}">
+                <v:OrdersHubView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:AdminViewModel}">
+                <v:AdminView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ServerOrdersViewModel}">
+                <v:ServerOrdersView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ServerReportViewModel}">
+                <v:ServerReportView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:OnlineOrderingViewModel}">
+                <v:OnlineOrderingView/>
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

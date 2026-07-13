@@ -39,5 +39,9 @@ public enum AppScreen
     Terminal,
     Kitchen,
     Kiosk,
-    Admin
+    Admin,
+    OrdersHub,
+    ServerOrders,
+    ServerReport,
+    Online
 }

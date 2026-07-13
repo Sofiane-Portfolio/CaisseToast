@@ -1,0 +1,225 @@
+<UserControl x:Class="CaisseToast.Wpf.Views.TableServiceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:CaisseToast.Wpf.ViewModels"
+             Background="{StaticResource Brush.Background}">
+    <UserControl.Resources>
+        <Style x:Key="TableSeatButton" TargetType="Button">
+            <Setter Property="Width" Value="96"/>
+            <Setter Property="Height" Value="96"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" CornerRadius="8" Padding="8"
+                                Background="{Binding Status, Converter={StaticResource TableStatusBg}}"
+                                BorderBrush="#D1EFFE" BorderThickness="2">
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Number, StringFormat=T{0}}" FontSize="20" FontWeight="Bold"
+                                           Foreground="{Binding Status, Converter={StaticResource TableStatusFg}}"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding GuestName}" FontSize="9" FontWeight="SemiBold"
+                                           Foreground="{Binding Status, Converter={StaticResource TableStatusFg}}"
+                                           HorizontalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Text="{Binding DisplayAmount}" FontSize="10" FontWeight="Bold"
+                                           Foreground="{Binding Status, Converter={StaticResource TableStatusFg}}"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Seats, StringFormat={}{0} cv.}" FontSize="8"
+                                           Foreground="{Binding Status, Converter={StaticResource TableStatusFg}}"
+                                           HorizontalAlignment="Center" Opacity="0.8"/>
+                                <Border Background="{Binding Status, Converter={StaticResource TableStatusFg}}"
+                                        CornerRadius="4" Padding="4,2" Margin="0,6,0,0" HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding StatusLabel}" FontSize="8" FontWeight="Bold"
+                                               Foreground="{Binding Status, Converter={StaticResource TableStatusBg}}"/>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource Brush.Navy}"/>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding IsBlocked}" Value="True">
+                                <Setter Property="Opacity" Value="0.65"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top bar -->
+        <Border Grid.Row="0" Background="{StaticResource Brush.HeaderGradient}" Padding="24,14">
+            <Grid>
+                <StackPanel>
+                    <TextBlock Text="{Binding Title}" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock Text="{Binding Subtitle}" FontSize="11" Foreground="#D1EFFE" Margin="0,4,0,0"/>
+                </StackPanel>
+                <Button Content="Retour" Style="{StaticResource Btn.HeaderGhost}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Command="{Binding GoBackCommand}"/>
+            </Grid>
+        </Border>
+
+        <!-- Server strip -->
+        <Border Grid.Row="1" Background="{StaticResource Brush.HeaderGradient}" Padding="24,10"
+                Visibility="{Binding ShowServerStrip, Converter={StaticResource BoolToVis}}">
+            <Grid>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <StackPanel Margin="0,0,16,0">
+                        <TextBlock Text="{Binding ServerName}" FontWeight="Bold" Foreground="White" FontSize="14"/>
+                        <TextBlock Text="{Binding ShiftInfo}" Foreground="#D1EFFE" FontSize="11"/>
+                    </StackPanel>
+                    <Border CornerRadius="12" Padding="8,4" Background="#1AFFFFFF">
+                        <TextBlock Text="{Binding ShiftPill}" Foreground="White" FontSize="10" FontWeight="Bold"/>
+                    </Border>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="{Binding ClockButtonLabel}" Style="{StaticResource Btn.HeaderGhost}" Margin="0,0,8,0"
+                            Command="{Binding ToggleClockCommand}"/>
+                    <Button Content="Mes commandes" Style="{StaticResource Btn.HeaderGhost}" Margin="0,0,8,0"
+                            Command="{Binding OpenOrdersCommand}"/>
+                    <Button Content="Mon rapport" Style="{StaticResource Btn.HeaderGhost}"
+                            Command="{Binding OpenReportCommand}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Toolbar -->
+        <Border Grid.Row="2" Background="White" BorderBrush="#140B128C" BorderThickness="0,0,0,1" Padding="16,12">
+            <StackPanel>
+                <WrapPanel VerticalAlignment="Center">
+                    <Button Style="{StaticResource Btn.Primary}" Margin="0,0,12,8" Command="{Binding QuickOrderCommand}">
+                        <TextBlock Text="Quick Order" FontWeight="Bold"/>
+                    </Button>
+                    <Button Content="{Binding EditModeLabel}" Margin="0,0,8,8" Padding="12,8"
+                            Command="{Binding ToggleEditModeCommand}"
+                            Visibility="{Binding CanManageTables, Converter={StaticResource BoolToVis}}"/>
+                    <Button Content="Réinitialiser grille" Margin="0,0,12,8" Padding="12,8"
+                            Command="{Binding ResetGridCommand}"
+                            Visibility="{Binding ShowResetGrid, Converter={StaticResource BoolToVis}}"/>
+                    <TextBlock Text="Libre · Occupée · Addition · Paiement · Réservée · Sale · Non dispo."
+                               VerticalAlignment="Center" Foreground="{StaticResource Brush.Muted}" FontSize="10" FontWeight="SemiBold" Margin="0,0,12,8"/>
+                    <TextBlock Text="{Binding StatFree}" Background="#D1EFFE" Foreground="{StaticResource Brush.Blue}" Padding="8,4" Margin="0,0,6,8" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding StatOccupied}" Background="{StaticResource Brush.Navy}" Foreground="White" Padding="8,4" Margin="0,0,6,8" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding StatDirty}" Background="#6B7280" Foreground="White" Padding="8,4" Margin="0,0,6,8" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding StatUnavailable}" Background="#1F2937" Foreground="White" Padding="8,4" Margin="0,0,6,8" FontSize="10" FontWeight="Bold"/>
+                </WrapPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Floor plan -->
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" Padding="20">
+            <StackPanel>
+                <TextBlock Text="PLAN DE SALLE" FontSize="10" FontWeight="Bold" Foreground="{StaticResource Brush.Blue}" Margin="0,0,0,12"/>
+                <TextBlock Text="Salle principale" FontWeight="Bold" Foreground="White" Background="{StaticResource Brush.Blue}" Padding="8,4" Margin="0,0,0,8" HorizontalAlignment="Left"/>
+
+                <!-- Canvas layout (custom / edit mode) -->
+                <Border Background="#F8FBFF" CornerRadius="12" BorderBrush="#140B128C" BorderThickness="1"
+                        MinHeight="520" Margin="0,0,0,8"
+                        Visibility="{Binding UseCanvasLayout, Converter={StaticResource BoolToVis}}">
+                    <Canvas x:Name="SalleCanvas" MinWidth="1100" MinHeight="500">
+                        <ItemsControl ItemsSource="{Binding SalleTables}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style TargetType="ContentPresenter">
+                                    <Setter Property="Canvas.Left" Value="{Binding PosX}"/>
+                                    <Setter Property="Canvas.Top" Value="{Binding PosY}"/>
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:TableSeatViewModel}">
+                                    <Button Style="{StaticResource TableSeatButton}"
+                                            PreviewMouseLeftButtonDown="Seat_PreviewMouseLeftButtonDown"
+                                            PreviewMouseMove="Seat_PreviewMouseMove"
+                                            PreviewMouseLeftButtonUp="Seat_PreviewMouseLeftButtonUp"
+                                            Command="{Binding DataContext.OpenTableCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}">
+                                        <Button.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Changer statut (manager)" Command="{Binding DataContext.CycleStatusCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                            </ContextMenu>
+                                        </Button.ContextMenu>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Canvas>
+                </Border>
+
+                <!-- Grid layout (default) -->
+                <ItemsControl ItemsSource="{Binding SalleTables}"
+                              Visibility="{Binding UseCanvasLayout, Converter={StaticResource InverseBoolToVis}}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:TableSeatViewModel}">
+                            <Button Style="{StaticResource TableSeatButton}" Command="{Binding DataContext.OpenTableCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}">
+                                <Button.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Changer statut (manager)" Command="{Binding DataContext.CycleStatusCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <TextBlock Text="Terrasse" FontWeight="Bold" Foreground="White" Background="#16A34A" Padding="8,4" Margin="0,16,0,8" HorizontalAlignment="Left"/>
+                <ItemsControl ItemsSource="{Binding TerrasseTables}">
+                    <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:TableSeatViewModel}">
+                            <Button Style="{StaticResource TableSeatButton}" Command="{Binding DataContext.OpenTableCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Grid Margin="0,16,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                        <TextBlock Text="Bar" FontWeight="Bold" Foreground="White" Background="{StaticResource Brush.Navy}" Padding="8,4" Margin="0,0,0,8" HorizontalAlignment="Left"/>
+                        <ItemsControl ItemsSource="{Binding BarTables}">
+                            <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:TableSeatViewModel}">
+                                    <Button Style="{StaticResource TableSeatButton}" Width="120" Command="{Binding DataContext.OpenTableCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Espace VIP" FontWeight="Bold" Foreground="White" Background="#EA580C" Padding="8,4" Margin="0,0,0,8" HorizontalAlignment="Left"/>
+                        <ItemsControl ItemsSource="{Binding VipTables}">
+                            <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:TableSeatViewModel}">
+                                    <Button Style="{StaticResource TableSeatButton}" Command="{Binding DataContext.OpenTableCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -321,11 +321,11 @@
 
     /* ─── HEADER ─── */
     #app-header {
-      min-height:66px; flex-shrink:0; position:relative; z-index:50;
-      background:linear-gradient(135deg, #0B128C 0%, #084F8C 48%, #063a72 100%);
+      min-height:68px; flex-shrink:0; position:relative; z-index:50;
+      background:linear-gradient(135deg, #0B128C 0%, #084F8C 42%, #063a72 100%);
       display:flex; align-items:center; padding:0 28px; gap:22px;
-      box-shadow:0 4px 32px rgba(11,18,140,0.35);
-      border-bottom:1px solid rgba(255,255,255,0.07);
+      box-shadow:0 6px 40px rgba(11,18,140,0.4);
+      border-bottom:1px solid rgba(255,255,255,0.08);
     }
     #app-header::after {
       content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
@@ -346,9 +346,9 @@
       letter-spacing:0.1em; text-transform:uppercase;
     }
     .hdr-brand-name {
-      font-size:18px; font-weight:800; color:#fff;
+      font-size:19px; font-weight:800; color:#fff;
       letter-spacing:-0.03em; line-height:1.15;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:200px;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:220px;
     }
     .hdr-brand-sub {
       font-size:10px; color:rgba(255,255,255,0.5); font-weight:600; margin-top:3px;
@@ -413,30 +413,68 @@
       border:1px dashed #d1effe; color:#6a7a9a; font-weight:600; font-size:13px;
     }
 
-    /* Kiosk — borne premium Light Banana */
+    /* Kiosk — borne fast-food premium (McDo / BK style) */
+    #kiosk-view { background:#1a1a1a; }
+    .kiosk-welcome {
+      position:absolute; inset:0; z-index:100; background:linear-gradient(160deg,#1a1a1a 0%,#2d1810 50%,#1a1a1a 100%);
+      display:flex; align-items:center; justify-content:center; padding:32px;
+    }
+    .kiosk-welcome.hide { display:none; }
+    .kiosk-welcome-inner { text-align:center; max-width:720px; width:100%; }
+    .kiosk-welcome-logo {
+      width:72px; height:72px; border-radius:20px; margin:0 auto 20px;
+      background:linear-gradient(135deg,#D62300,#ff6b35);
+      display:flex; align-items:center; justify-content:center; color:#fff;
+      box-shadow:0 12px 40px rgba(214,35,0,0.4);
+    }
+    .kiosk-welcome-logo svg { width:36px; height:36px; }
+    .kiosk-welcome-title { font-size:42px; font-weight:800; color:#fff; letter-spacing:-0.03em; }
+    .kiosk-welcome-sub { font-size:16px; color:rgba(255,255,255,0.65); font-weight:600; margin-top:10px; }
+    .kiosk-dining-btns { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:40px; }
+    .kiosk-dining-btn {
+      min-height:200px; border:none; border-radius:24px; cursor:pointer; font-family:'DM Sans',sans-serif;
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+      transition:transform 0.2s, box-shadow 0.2s; position:relative; overflow:hidden;
+    }
+    .kiosk-dining-btn::before {
+      content:''; position:absolute; inset:0; opacity:0.15;
+      background-size:cover; background-position:center;
+    }
+    .kiosk-dining-btn.dinein { background:linear-gradient(145deg,#D62300,#a31b00); color:#fff; box-shadow:0 16px 48px rgba(214,35,0,0.45); }
+    .kiosk-dining-btn.takeout { background:linear-gradient(145deg,#0B128C,#084F8C); color:#fff; box-shadow:0 16px 48px rgba(11,18,140,0.45); }
+    .kiosk-dining-btn:hover { transform:translateY(-6px) scale(1.02); }
+    .kiosk-dining-btn-ic { width:64px; height:64px; border-radius:50%; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; position:relative; z-index:1; }
+    .kiosk-dining-btn-ic svg { width:32px; height:32px; }
+    .kiosk-dining-btn-lbl { font-size:22px; font-weight:800; position:relative; z-index:1; }
+    .kiosk-dining-btn-hint { font-size:12px; opacity:0.8; font-weight:600; position:relative; z-index:1; }
     .kiosk-topbar {
-      padding:0 24px; height:60px; background:#fff;
+      padding:0 28px; height:64px; background:#1a1a1a;
       display:flex; align-items:center; justify-content:space-between; flex-shrink:0;
-      border-bottom:1px solid rgba(11,18,140,0.08);
-      box-shadow:0 2px 16px rgba(11,18,140,0.05);
+      border-bottom:2px solid #D62300;
     }
     .kiosk-topbar-brand { display:flex; align-items:center; gap:14px; }
     .kiosk-topbar-ic {
       width:42px; height:42px; border-radius:12px;
-      background:linear-gradient(135deg,#0B128C,#084F8C);
+      background:linear-gradient(135deg,#D62300,#ff6b35);
       display:flex; align-items:center; justify-content:center; color:#fff;
-      box-shadow:0 4px 14px rgba(11,18,140,0.25);
+      box-shadow:0 4px 14px rgba(214,35,0,0.4);
     }
     .kiosk-topbar-ic svg { width:20px; height:20px; }
-    .kiosk-topbar-title { font-size:17px; font-weight:800; color:#0B128C; letter-spacing:-0.02em; }
-    .kiosk-topbar-sub { font-size:11px; color:#6a7a9a; font-weight:600; margin-top:2px; }
+    .kiosk-topbar-title { font-size:18px; font-weight:800; color:#fff; letter-spacing:-0.02em; }
+    .kiosk-topbar-sub { font-size:11px; color:rgba(255,255,255,0.55); font-weight:600; margin-top:2px; }
+    .kiosk-dining-badge {
+      display:inline-flex; padding:5px 12px; border-radius:999px; font-size:10px; font-weight:800;
+      text-transform:uppercase; letter-spacing:0.06em; margin-left:12px;
+      background:rgba(214,35,0,0.25); color:#ff8a65; border:1px solid rgba(214,35,0,0.4);
+    }
+    .kiosk-dining-badge.takeout { background:rgba(11,18,140,0.4); color:#d1effe; border-color:rgba(209,239,254,0.3); }
     .kiosk-topbar-back {
-      height:38px; padding:0 18px; border:1.5px solid #d1effe; border-radius:10px;
-      background:#fff; color:#084F8C; font-size:12px; font-weight:700;
+      height:40px; padding:0 20px; border:1.5px solid rgba(255,255,255,0.2); border-radius:12px;
+      background:rgba(255,255,255,0.08); color:#fff; font-size:12px; font-weight:700;
       cursor:pointer; font-family:'DM Sans',sans-serif; display:flex; align-items:center; gap:6px;
     }
-    .kiosk-topbar-back:hover { background:#eef6ff; border-color:#0B128C; }
-    .kiosk-body { flex:1; display:flex; overflow:hidden; background:#f4f7fc; }
+    .kiosk-topbar-back:hover { background:rgba(255,255,255,0.16); }
+    .kiosk-body { flex:1; display:flex; overflow:hidden; background:#1a1a1a; position:relative; }
     .kiosk-side {
       width:340px; flex-shrink:0; background:#fff; display:flex; flex-direction:column;
       border-right:1px solid rgba(11,18,140,0.08);
@@ -513,56 +551,78 @@
     }
     .kiosk-order-btn:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 6px 20px rgba(11,18,140,0.35); }
     .kiosk-order-btn:disabled { opacity:0.35; cursor:not-allowed; box-shadow:none; transform:none; }
-    .kiosk-main { flex:1; display:flex; flex-direction:column; min-width:0; }
+    .kiosk-main { flex:1; display:flex; flex-direction:column; min-width:0; background:#1a1a1a; }
     .kiosk-main-hdr {
-      padding:18px 28px 14px; display:flex; justify-content:space-between; align-items:flex-end; gap:16px;
-      border-bottom:1px solid rgba(11,18,140,0.06); background:#fff;
+      padding:16px 28px; display:flex; justify-content:space-between; align-items:center; gap:16px;
+      border-bottom:1px solid rgba(255,255,255,0.08); background:#222; flex-shrink:0;
     }
-    .kiosk-main-title { font-size:18px; font-weight:800; color:#0B128C; letter-spacing:-0.02em; }
-    .kiosk-main-hint { font-size:11px; color:#6a7a9a; font-weight:600; margin-top:3px; }
-    .kiosk-cats { display:flex; gap:6px; flex-wrap:wrap; }
+    .kiosk-main-title { font-size:20px; font-weight:800; color:#fff; letter-spacing:-0.02em; }
+    .kiosk-main-hint { font-size:11px; color:rgba(255,255,255,0.5); font-weight:600; margin-top:3px; }
+    .kiosk-cats { display:flex; gap:8px; flex-wrap:wrap; }
     .kiosk-cat {
-      height:34px; padding:0 14px; border-radius:10px; border:1.5px solid #d1effe; background:#fff;
-      font-size:11px; font-weight:700; color:#084F8C; cursor:pointer; font-family:'DM Sans',sans-serif;
-      transition:all 0.12s;
+      height:40px; padding:0 20px; border-radius:12px; border:2px solid rgba(255,255,255,0.15); background:transparent;
+      font-size:12px; font-weight:800; color:rgba(255,255,255,0.7); cursor:pointer; font-family:'DM Sans',sans-serif;
+      transition:all 0.12s; text-transform:uppercase; letter-spacing:0.04em;
     }
-    .kiosk-cat:hover { border-color:#0B128C; }
-    .kiosk-cat.active { background:#0B128C; color:#fff; border-color:#0B128C; box-shadow:0 3px 12px rgba(11,18,140,0.2); }
+    .kiosk-cat:hover { border-color:#D62300; color:#fff; }
+    .kiosk-cat.active { background:#D62300; color:#fff; border-color:#D62300; box-shadow:0 4px 16px rgba(214,35,0,0.4); }
     .kiosk-menu {
-      flex:1; overflow-y:auto; padding:20px 28px 28px;
-      display:grid; grid-template-columns:repeat(auto-fill,minmax(168px,1fr)); gap:14px; align-content:start;
+      flex:1; overflow-y:auto; padding:20px 28px 32px;
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:20px; align-content:start;
     }
     .kiosk-item {
-      padding:0; border-radius:16px; border:1px solid rgba(11,18,140,0.08); background:#fff;
-      cursor:pointer; text-align:left; transition:transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+      padding:0; border-radius:20px; border:none; background:#2a2a2a;
+      cursor:pointer; text-align:left; transition:transform 0.18s, box-shadow 0.18s;
       overflow:hidden; font-family:'DM Sans',sans-serif;
+      box-shadow:0 8px 32px rgba(0,0,0,0.4);
     }
-    .kiosk-item:hover { border-color:#0B128C; box-shadow:0 8px 24px rgba(11,18,140,0.1); transform:translateY(-2px); }
-    .kiosk-item:active { transform:translateY(0); }
-    .kiosk-item-top {
-      height:80px; display:flex; align-items:center; justify-content:center;
-      position:relative; overflow:hidden;
+    .kiosk-item:hover { transform:translateY(-4px); box-shadow:0 20px 48px rgba(0,0,0,0.5); }
+    .kiosk-item.unavail { opacity:0.45; cursor:not-allowed; filter:grayscale(0.5); }
+    .kiosk-item.unavail:hover { transform:none; }
+    .kiosk-item-img {
+      height:200px; width:100%; object-fit:cover; display:block; background:#333;
     }
-    .kiosk-item-top::after {
+    .kiosk-item-img-wrap { position:relative; height:200px; overflow:hidden; }
+    .kiosk-item-img-wrap::after {
       content:''; position:absolute; inset:0;
-      background:linear-gradient(180deg, transparent 40%, rgba(11,18,140,0.06));
+      background:linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5));
     }
-    .kiosk-item-letter {
-      font-size:28px; font-weight:800; letter-spacing:-0.03em; position:relative; z-index:1;
+    .kiosk-item-badge {
+      position:absolute; top:10px; left:10px; z-index:2; padding:5px 10px; border-radius:8px;
+      font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:0.05em;
     }
-    .kiosk-item-add {
-      position:absolute; bottom:8px; right:8px; z-index:2;
-      width:26px; height:26px; border-radius:8px; background:#0B128C; color:#fff;
-      display:flex; align-items:center; justify-content:center; opacity:0;
-      transition:opacity 0.15s; box-shadow:0 2px 8px rgba(11,18,140,0.3);
+    .kiosk-item-badge.low { background:#fef3c7; color:#b45309; }
+    .kiosk-item-badge.out { background:#fee2e2; color:#dc2626; }
+    .kiosk-item-add-fab {
+      position:absolute; bottom:12px; right:12px; z-index:2;
+      width:44px; height:44px; border-radius:50%; border:none;
+      background:#D62300; color:#fff; display:flex; align-items:center; justify-content:center;
+      box-shadow:0 4px 16px rgba(214,35,0,0.5); cursor:pointer;
     }
-    .kiosk-item:hover .kiosk-item-add { opacity:1; }
-    .kiosk-item-add svg { width:14px; height:14px; }
-    .kiosk-item-body { padding:12px 14px 14px; }
-    .kiosk-item-name { font-size:13px; font-weight:700; color:#0B128C; line-height:1.3; }
-    .kiosk-item-meta { font-size:9px; color:#7bc5e8; font-weight:700; margin-top:4px; text-transform:uppercase; letter-spacing:0.04em; }
-    .kiosk-item-price { font-size:15px; font-weight:800; color:#084F8C; margin-top:8px; }
-    .kiosk-item.low-stock .kiosk-item-meta::after { content:' · Stock bas'; color:#6a7a9a; }
+    .kiosk-item-add-fab svg { width:20px; height:20px; }
+    .kiosk-item-body { padding:16px 18px 18px; }
+    .kiosk-item-name { font-size:17px; font-weight:800; color:#fff; line-height:1.25; }
+    .kiosk-item-meta { font-size:9px; color:rgba(255,255,255,0.45); font-weight:700; margin-top:5px; text-transform:uppercase; letter-spacing:0.05em; }
+    .kiosk-item-price { font-size:22px; font-weight:800; color:#ff8a65; margin-top:10px; }
+    .kiosk-confirm-overlay {
+      display:none; position:fixed; inset:0; background:rgba(11,18,140,0.45); z-index:9000;
+      align-items:center; justify-content:center; padding:24px;
+    }
+    .kiosk-confirm-overlay.show { display:flex; }
+    .kiosk-confirm-box {
+      width:min(420px,100%); background:#fff; border-radius:18px; padding:24px;
+      box-shadow:0 24px 60px rgba(11,18,140,0.25); border:1.5px solid rgba(11,18,140,0.08);
+    }
+    .kiosk-confirm-title { font-size:18px; font-weight:800; color:#0B128C; }
+    .kiosk-confirm-sub { font-size:12px; color:#6a7a9a; font-weight:600; margin-top:6px; }
+    .kiosk-confirm-total { font-size:28px; font-weight:800; color:#084F8C; margin:16px 0 6px; }
+    .kiosk-confirm-items { font-size:11px; color:#6a7a9a; font-weight:600; max-height:120px; overflow-y:auto; margin-bottom:18px; }
+    .kiosk-confirm-acts { display:flex; gap:10px; }
+    .kiosk-confirm-btn {
+      flex:1; height:44px; border-radius:11px; border:1.5px solid #d1effe; background:#fff;
+      color:#084F8C; font-size:13px; font-weight:800; cursor:pointer; font-family:'DM Sans',sans-serif;
+    }
+    .kiosk-confirm-btn.primary { background:linear-gradient(135deg,#0B128C,#084F8C); color:#fff; border:none; }
 
     /* Online Ordering */
     .online-shell { flex:1; display:flex; flex-direction:column; min-height:0; background:#f4f7fc; }
@@ -725,8 +785,48 @@
       font-size:12px; font-weight:700; color:#084F8C;
     }
     .mode-server-banner.show { display:block; }
-    .mode-server-dash { display:none; padding:12px 24px 28px; max-width:1280px; margin:0 auto; width:100%; box-sizing:border-box; }
+    .mode-server-dash { display:none; padding:12px 24px 28px; max-width:1400px; margin:0 auto; width:100%; box-sizing:border-box; }
     .mode-server-dash.show { display:block; }
+    .srv-shift-bar {
+      display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+      padding:16px 20px; margin-bottom:14px; border-radius:16px;
+      background:linear-gradient(135deg,#0B128C 0%,#084F8C 100%);
+      box-shadow:0 8px 28px rgba(11,18,140,0.25); color:#fff;
+    }
+    .srv-shift-left { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+    .srv-shift-avatar {
+      width:48px; height:48px; border-radius:14px; background:rgba(255,255,255,0.15);
+      display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800;
+      border:2px solid rgba(209,239,254,0.3);
+    }
+    .srv-shift-name { font-size:16px; font-weight:800; letter-spacing:-0.02em; }
+    .srv-shift-role { font-size:11px; color:#d1effe; font-weight:600; margin-top:2px; }
+    .srv-shift-pill {
+      display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px;
+      font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.05em;
+    }
+    .srv-shift-pill.on { background:rgba(34,197,94,0.25); color:#bbf7d0; border:1px solid rgba(34,197,94,0.4); }
+    .srv-shift-pill.off { background:rgba(255,255,255,0.1); color:#d1effe; border:1px solid rgba(209,239,254,0.25); }
+    .srv-shift-pill i { width:8px; height:8px; border-radius:50%; background:currentColor; }
+    .srv-shift-time { font-size:12px; color:#d1effe; font-weight:600; margin-top:4px; }
+    .srv-shift-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .srv-shift-btn {
+      height:40px; padding:0 16px; border-radius:11px; border:1.5px solid rgba(209,239,254,0.35);
+      background:rgba(255,255,255,0.1); color:#fff; font-size:11px; font-weight:800;
+      cursor:pointer; font-family:'DM Sans',sans-serif; display:flex; align-items:center; gap:6px;
+      transition:background 0.12s;
+    }
+    .srv-shift-btn:hover { background:rgba(255,255,255,0.2); }
+    .srv-shift-btn.primary { background:#fff; color:#0B128C; border-color:#fff; }
+    .srv-shift-btn.primary:hover { background:#d1effe; }
+    .srv-report-strip {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:14px;
+    }
+    .srv-rpt-mini {
+      background:#fff; border-radius:12px; padding:12px 14px; border:1.5px solid rgba(11,18,140,0.08);
+    }
+    .srv-rpt-mini-val { font-size:20px; font-weight:800; color:#0B128C; }
+    .srv-rpt-mini-lbl { font-size:9px; font-weight:800; color:#6a7a9a; text-transform:uppercase; letter-spacing:0.04em; margin-top:4px; }
     .srv-kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:14px; }
     .srv-kpi {
       background:#fff; border-radius:14px; padding:14px 16px; border:1.5px solid rgba(11,18,140,0.08);
@@ -750,7 +850,8 @@
     .srv-act-ic svg { width:20px; height:20px; }
     .srv-act-title { font-size:14px; font-weight:800; color:#0B128C; }
     .srv-act-desc { font-size:11px; color:#6a7a9a; font-weight:600; margin-top:2px; }
-    .srv-main { display:grid; grid-template-columns:1.4fr 1fr; gap:14px; }
+    .srv-main { display:grid; grid-template-columns:1.8fr 1fr; gap:14px; }
+    .srv-card.floor-card { min-height:420px; }
     @media (max-width:980px){ .srv-main,.srv-kpi-row,.srv-actions { grid-template-columns:1fr; } }
     .srv-card {
       background:#fff; border-radius:16px; border:1.5px solid rgba(11,18,140,0.08);
@@ -774,9 +875,12 @@
     .srv-leg i.bill { background:#ffedd5; border:1.5px solid #fb923c; }
     .srv-leg i.paying { background:#fef3c7; border:1.5px solid #f59e0b; }
     .srv-leg i.reserved { background:#f3f4f6; border:1.5px dashed #9ca3af; }
+    .srv-leg i.dirty { background:#e5e7eb; border:1.5px solid #6b7280; }
+    .srv-leg i.unavailable { background:#1f2937; border:1.5px solid #374151; }
     .srv-floor {
       flex:1; overflow-y:auto; padding:12px 14px 16px;
       display:grid; grid-template-columns:repeat(auto-fill,minmax(72px,1fr)); gap:8px; align-content:start;
+      min-height:280px;
     }
     .srv-tbl {
       min-height:72px; border-radius:12px; border:1.5px solid #d1effe; background:#fff;
@@ -789,6 +893,9 @@
     .srv-tbl.bill { background:#fff7ed; border-color:#fb923c; }
     .srv-tbl.paying { background:#fef9c3; border-color:#f59e0b; }
     .srv-tbl.reserved { background:#f9fafb; border-style:dashed; border-color:#9ca3af; }
+    .srv-tbl.dirty { background:#f3f4f6; border-color:#6b7280; opacity:0.85; }
+    .srv-tbl.unavailable { background:#1f2937; border-color:#374151; cursor:not-allowed; }
+    .srv-tbl.unavailable .srv-tbl-num,.srv-tbl.unavailable .srv-tbl-st { color:#9ca3af; }
     .srv-tbl-num { font-size:14px; font-weight:800; color:#0B128C; }
     .srv-tbl-st { font-size:8px; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:#6a7a9a; }
     .srv-tbl.occupied .srv-tbl-st { color:#084F8C; }
@@ -816,11 +923,11 @@
 
     /* Barre haute du mode */
     .mode-topbar {
-      padding:0 32px; height:60px;
-      background:linear-gradient(135deg, #0B128C 0%, #084F8C 48%, #063a72 100%);
-      border-bottom:1px solid rgba(255,255,255,0.06);
+      padding:0 32px; height:64px;
+      background:linear-gradient(135deg, #0B128C 0%, #084F8C 45%, #063a72 100%);
+      border-bottom:1px solid rgba(255,255,255,0.08);
       display:flex; align-items:center; justify-content:space-between; flex-shrink:0;
-      box-shadow:0 4px 24px rgba(11,18,140,0.28);
+      box-shadow:0 6px 32px rgba(11,18,140,0.32);
       position:relative;
     }
     .mode-topbar::after {
@@ -2215,6 +2322,25 @@
     }
     .tbl-topbar-title { font-size:18px; font-weight:800; color:#fff; }
     .tbl-topbar-sub { font-size:11px; color:#7bc5e8; margin-top:2px; font-weight:500; }
+    .tbl-server-strip {
+      display:none; padding:10px 24px; gap:12px; align-items:center; flex-wrap:wrap;
+      background:linear-gradient(90deg,#0B128C,#084F8C); border-bottom:1px solid rgba(209,239,254,0.15);
+    }
+    .tbl-server-strip.show { display:flex; }
+    .tbl-srv-name { font-size:14px; font-weight:800; color:#fff; }
+    .tbl-srv-shift { font-size:11px; color:#d1effe; font-weight:600; }
+    .tbl-srv-pill {
+      padding:5px 12px; border-radius:999px; font-size:10px; font-weight:800; text-transform:uppercase;
+    }
+    .tbl-srv-pill.on { background:rgba(34,197,94,0.25); color:#bbf7d0; }
+    .tbl-srv-pill.off { background:rgba(255,255,255,0.1); color:#d1effe; }
+    .tbl-srv-actions { display:flex; gap:8px; margin-left:auto; flex-wrap:wrap; }
+    .tbl-srv-btn {
+      height:34px; padding:0 14px; border-radius:9px; border:1.5px solid rgba(209,239,254,0.35);
+      background:rgba(255,255,255,0.1); color:#fff; font-size:11px; font-weight:800;
+      cursor:pointer; font-family:'DM Sans',sans-serif;
+    }
+    .tbl-srv-btn.primary { background:#fff; color:#0B128C; border-color:#fff; }
     .tbl-back {
       height:38px; padding:0 18px; background:#084F8C; border:1px solid #7bc5e8;
       border-radius:4px; color:#fff; font-size:12px; font-weight:700; cursor:pointer;
@@ -2247,6 +2373,24 @@
     .tbl-legend-swatch.paying { background:#f59e0b; border-color:#d97706; }
     .tbl-legend-swatch.reserved { background:#fff; border-color:#7bc5e8; border-style:dashed; }
     .tbl-legend-swatch.vip { background:#fff; border-color:#ffd09e; box-shadow:inset 0 0 0 2px #ffd09e; }
+    .tbl-legend-swatch.dirty { background:#9ca3af; border-color:#6b7280; }
+    .tbl-legend-swatch.unavailable { background:#1f2937; border-color:#374151; }
+    .tbl-stat-pill.dirty { background:#6b7280; color:#fff; }
+    .tbl-stat-pill.unavailable { background:#1f2937; color:#fff; }
+    .tbl-pos-btn {
+      height:36px; padding:0 14px; border-radius:8px; border:1.5px solid #d1effe; background:#fff;
+      font-size:11px; font-weight:800; color:#084F8C; cursor:pointer; font-family:'DM Sans',sans-serif;
+    }
+    .tbl-pos-btn.on { background:#0B128C; color:#fff; border-color:#0B128C; }
+    .tbl-zone-pos { position:relative !important; display:block !important; min-height:380px !important; padding-top:36px !important; }
+    .tbl-zone-pos .tbl-seat { position:absolute; z-index:2; }
+    .tbl-zone-pos .tbl-seat.dragging { z-index:10; opacity:0.85; cursor:grabbing; }
+    .tbl-seat.dirty .tbl-seat-unit { background:#e5e7eb !important; border-color:#6b7280 !important; border-style:dashed; }
+    .tbl-seat.dirty .tbl-seat-status { background:#6b7280 !important; color:#fff !important; }
+    .tbl-seat.unavailable .tbl-seat-unit { background:#1f2937 !important; border-color:#374151 !important; opacity:0.7; }
+    .tbl-seat.unavailable .tbl-seat-num,.tbl-seat.unavailable .tbl-seat-meta { color:#9ca3af !important; }
+    .tbl-seat.unavailable .tbl-seat-status { background:#374151 !important; color:#d1d5db !important; }
+    .tbl-seat.unavailable { cursor:not-allowed; }
     .tbl-stat-pill.paying { background:#f59e0b; color:#fff; }
     .tbl-stat-pill.reserved { background:#7bc5e8; color:#fff; }
     .tbl-stats { display:flex; gap:8px; }
@@ -3038,9 +3182,31 @@
       </div>
     </div>
 
-    <div class="mode-server-banner" id="mode-server-banner">Mode serveur — cliquez une table pour commander · accès direct aux commandes actives</div>
+    <div class="mode-server-banner" id="mode-server-banner">Mode serveur — shift actif · plan de salle · rapport personnel</div>
 
     <div class="mode-server-dash" id="mode-server-dash">
+      <div class="srv-shift-bar" id="srv-shift-bar">
+        <div class="srv-shift-left">
+          <div class="srv-shift-avatar" id="srv-shift-avatar">S</div>
+          <div>
+            <div class="srv-shift-name" id="srv-shift-name">Serveur</div>
+            <div class="srv-shift-role" id="srv-shift-role">Service salle</div>
+            <div class="srv-shift-time" id="srv-shift-time">—</div>
+          </div>
+          <span class="srv-shift-pill off" id="srv-shift-pill"><i></i><span id="srv-shift-lbl">Hors service</span></span>
+        </div>
+        <div class="srv-shift-actions">
+          <button class="srv-shift-btn primary" id="srv-clock-btn" onclick="srvClockAction()">Clock In</button>
+          <button class="srv-shift-btn" onclick="openServerReport()">Mon rapport</button>
+          <button class="srv-shift-btn" onclick="openTableService()">Plan complet</button>
+        </div>
+      </div>
+      <div class="srv-report-strip" id="srv-report-strip">
+        <div class="srv-rpt-mini"><div class="srv-rpt-mini-val" id="srv-rpt-sales">0</div><div class="srv-rpt-mini-lbl">Mes ventes</div></div>
+        <div class="srv-rpt-mini"><div class="srv-rpt-mini-val" id="srv-rpt-rev">0 €</div><div class="srv-rpt-mini-lbl">Mon CA</div></div>
+        <div class="srv-rpt-mini"><div class="srv-rpt-mini-val" id="srv-rpt-tables">0</div><div class="srv-rpt-mini-lbl">Tables servies</div></div>
+        <div class="srv-rpt-mini"><div class="srv-rpt-mini-val" id="srv-rpt-hours">0:00</div><div class="srv-rpt-mini-lbl">Heures shift</div></div>
+      </div>
       <div class="srv-kpi-row">
         <div class="srv-kpi" onclick="openChecks('open')">
           <div class="srv-kpi-val" id="srv-kpi-open">0</div>
@@ -3078,9 +3244,9 @@
         </button>
       </div>
       <div class="srv-main">
-        <div class="srv-card">
+        <div class="srv-card floor-card">
           <div class="srv-card-hdr">
-            <div class="srv-card-title">Plan de tables — clic = commande</div>
+            <div class="srv-card-title">Plan de salle — votre secteur</div>
             <button class="srv-card-link" onclick="openTableService()">Salle entière →</button>
           </div>
           <div class="srv-legend">
@@ -3089,6 +3255,8 @@
             <span class="srv-leg"><i class="bill"></i>Addition</span>
             <span class="srv-leg"><i class="paying"></i>Paiement</span>
             <span class="srv-leg"><i class="reserved"></i>Réservée</span>
+            <span class="srv-leg"><i class="dirty"></i>Sale</span>
+            <span class="srv-leg"><i class="unavailable"></i>Non dispo.</span>
           </div>
           <div class="srv-floor" id="srv-floor"></div>
         </div>
@@ -3331,13 +3499,25 @@
   <div id="table-view">
     <div class="tbl-topbar">
       <div>
-        <div class="tbl-topbar-title">Table Service</div>
-        <div class="tbl-topbar-sub">Sélectionnez une table ou lancez une commande rapide</div>
+        <div class="tbl-topbar-title" id="tbl-topbar-title">Table Service</div>
+        <div class="tbl-topbar-sub" id="tbl-topbar-sub">Sélectionnez une table ou lancez une commande rapide</div>
       </div>
-      <button class="tbl-back" onclick="goHome()">
+      <button class="tbl-back" onclick="tableBack()">
         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
         Retour
       </button>
+    </div>
+    <div class="tbl-server-strip" id="tbl-server-strip">
+      <div>
+        <div class="tbl-srv-name" id="tbl-srv-name">Serveur</div>
+        <div class="tbl-srv-shift" id="tbl-srv-shift">—</div>
+      </div>
+      <span class="tbl-srv-pill off" id="tbl-srv-pill">Hors service</span>
+      <div class="tbl-srv-actions">
+        <button class="tbl-srv-btn primary" id="tbl-srv-clock" onclick="srvClockAction()">Clock In</button>
+        <button class="tbl-srv-btn" onclick="openChecks('open')">Mes commandes</button>
+        <button class="tbl-srv-btn" onclick="openServerReport()">Mon rapport</button>
+      </div>
     </div>
     <div class="tbl-body">
       <div class="tbl-toolbar">
@@ -3354,18 +3534,24 @@
           <div class="tbl-legend-item"><span class="tbl-legend-swatch bill"></span> Addition</div>
           <div class="tbl-legend-item"><span class="tbl-legend-swatch paying"></span> En paiement</div>
           <div class="tbl-legend-item"><span class="tbl-legend-swatch reserved"></span> Réservée</div>
+          <div class="tbl-legend-item"><span class="tbl-legend-swatch dirty"></span> Sale</div>
+          <div class="tbl-legend-item"><span class="tbl-legend-swatch unavailable"></span> Non dispo.</div>
           <div class="tbl-legend-item"><span class="tbl-legend-swatch vip"></span> VIP</div>
         </div>
+        <button class="tbl-pos-btn" id="tbl-pos-btn" data-role-min="manager" onclick="toggleTableEditMode()">Positionner tables</button>
+        <button class="tbl-pos-btn" id="tbl-reset-btn" data-role-min="manager" onclick="resetTableLayout()" style="display:none">Réinitialiser grille</button>
         <div class="tbl-stats">
           <span class="tbl-stat-pill" id="tbl-stat-free">12 libres</span>
           <span class="tbl-stat-pill busy" id="tbl-stat-busy">0 occupées</span>
           <span class="tbl-stat-pill bill" id="tbl-stat-bill">0 addition</span>
           <span class="tbl-stat-pill paying" id="tbl-stat-paying">0 en paiement</span>
           <span class="tbl-stat-pill reserved" id="tbl-stat-reserved">0 réservées</span>
+          <span class="tbl-stat-pill dirty" id="tbl-stat-dirty">0 sales</span>
+          <span class="tbl-stat-pill unavailable" id="tbl-stat-unavail">0 indisponibles</span>
         </div>
       </div>
       <div class="tbl-floor-wrap">
-        <div class="tbl-help"><b>Comment faire :</b> 1) Cliquez une table → 2) Ajoutez des plats → 3) <b>Addition</b> = client demande la note (orange) → 4) <b>Payer</b> = encaisser (jaune puis libre). Ne pas utiliser Quick Order pour les tables.</div>
+        <div class="tbl-help"><b>Comment faire :</b> 1) Cliquez une table → 2) Ajoutez des plats → 3) <b>Addition</b> = client demande la note (orange) → 4) <b>Payer</b> = encaisser. Clic droit (manager) = changer statut (réservée, sale, non dispo.). Bouton <b>Positionner tables</b> = glisser-déposer le plan.</div>
         <div class="tbl-section-lbl">Plan de salle</div>
         <div class="tbl-floor">
           <div class="tbl-zones">
@@ -3777,12 +3963,31 @@
 
   <!-- ─── KIOSK ─── -->
   <div id="kiosk-view">
+    <div class="kiosk-welcome" id="kiosk-welcome">
+      <div class="kiosk-welcome-inner">
+        <div class="kiosk-welcome-logo"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg></div>
+        <div class="kiosk-welcome-title" id="kiosk-welcome-name">Bienvenue</div>
+        <div class="kiosk-welcome-sub">Touchez pour commencer votre commande</div>
+        <div class="kiosk-dining-btns">
+          <button class="kiosk-dining-btn dinein" onclick="kioskStartDining('dinein')">
+            <span class="kiosk-dining-btn-ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></span>
+            <span class="kiosk-dining-btn-lbl">Sur place</span>
+            <span class="kiosk-dining-btn-hint">Manger au restaurant</span>
+          </button>
+          <button class="kiosk-dining-btn takeout" onclick="kioskStartDining('takeout')">
+            <span class="kiosk-dining-btn-ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg></span>
+            <span class="kiosk-dining-btn-lbl">À emporter</span>
+            <span class="kiosk-dining-btn-hint">Sac à emporter</span>
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="kiosk-topbar">
       <div class="kiosk-topbar-brand">
         <div class="kiosk-topbar-ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg></div>
         <div>
-          <div class="kiosk-topbar-title">Kiosk · Borne client</div>
-          <div class="kiosk-topbar-sub">Libre-service · commande · envoi cuisine</div>
+          <div class="kiosk-topbar-title">Commande<span class="kiosk-dining-badge" id="kiosk-dining-badge">Sur place</span></div>
+          <div class="kiosk-topbar-sub">Touchez un produit · paiement au comptoir</div>
         </div>
       </div>
       <button class="kiosk-topbar-back" onclick="goHome()">
@@ -3823,6 +4028,18 @@
           <div class="kiosk-cats" id="kiosk-cats"></div>
         </div>
         <div class="kiosk-menu" id="kiosk-menu"></div>
+      </div>
+    </div>
+    <div class="kiosk-confirm-overlay" id="kiosk-confirm" onclick="if(event.target===this)closeKioskConfirm()">
+      <div class="kiosk-confirm-box">
+        <div class="kiosk-confirm-title">Confirmer la commande ?</div>
+        <div class="kiosk-confirm-sub">Vérifiez votre panier avant envoi en cuisine</div>
+        <div class="kiosk-confirm-total" id="kiosk-confirm-total">0,00 €</div>
+        <div class="kiosk-confirm-items" id="kiosk-confirm-items"></div>
+        <div class="kiosk-confirm-acts">
+          <button class="kiosk-confirm-btn" onclick="closeKioskConfirm()">Annuler</button>
+          <button class="kiosk-confirm-btn primary" onclick="kioskConfirmOrder()">Confirmer</button>
+        </div>
       </div>
     </div>
   </div>
@@ -4405,7 +4622,7 @@
   let clockedIn=false, shiftLog=[], activeShift=null, loginIntent='timeclock';
   let diningIdx=0, diningOptions=['Dining option','Dine In','Takeout','Delivery'];
   let pendingItem=null, modQtyVal=1, modSelected=[], modActiveGroup=0, cartUid=1;
-  let tabName='', kitchenOrders=[], onlineOrders=[], kioskCart=[], hubChannel='all', cashLog=[];
+  let tabName='', kitchenOrders=[], onlineOrders=[], kioskCart=[], kioskCat='all', kioskDining='dinein', kioskStarted=false, hubChannel='all', cashLog=[];
   let tableData={}, currentTableNum=null, tipAmount=0, scheduledAt=null;
   let giftCards=[], giftAmount=25;
   let activeCourse=2, activeCheckId=1;
@@ -4422,6 +4639,9 @@
     return L;
   }
   let TABLE_LAYOUT=buildTableLayout();
+  let tablePositions={};
+  let tablePositionsCustom=false;
+  let tableEditMode=false;
   const TABLE_COUNT=TABLE_LAYOUT.length;
   const CAT_LABELS={ all:'Tous les articles', food:'Plats', drinks:'Boissons', desserts:'Desserts' };
   const CAT_CODES={ food:'PLT', drinks:'BSS', desserts:'DST' };
@@ -4437,7 +4657,7 @@
       localStorage.setItem('pos_state', JSON.stringify({
         totOrd, totRev, orderN, paidOrders, heldOrders, closedOrders, kitchenOrders, onlineOrders,
         restaurantConfig, employees, products, cashLog, giftCards,
-        tableData, currentTableNum, tipAmount, scheduledAt,
+        tableData, currentTableNum, tipAmount, scheduledAt, tablePositions, tablePositionsCustom, TABLE_LAYOUT,
       }));
     } catch(e){}
   }
@@ -4473,11 +4693,16 @@
       else if(s.busyTables) s.busyTables.forEach(n=>{ tableData[n]={state:'occupied',tabName:''}; });
       if(s.scheduledAt) scheduledAt=s.scheduledAt;
       if(s.tipAmount!=null) tipAmount=s.tipAmount;
+      if(s.tablePositions && s.tablePositionsCustom) {
+        tablePositions=s.tablePositions;
+        tablePositionsCustom=true;
+      }
+      if(s.TABLE_LAYOUT && s.TABLE_LAYOUT.length) TABLE_LAYOUT=s.TABLE_LAYOUT;
     } catch(e){}
   }
 
   function getTableCounts() {
-    const counts={ free:0, occupied:0, bill:0, paying:0, reserved:0 };
+    const counts={ free:0, occupied:0, bill:0, paying:0, reserved:0, dirty:0, unavailable:0 };
     TABLE_LAYOUT.forEach(t=>{ const st=getTableState(t.num); if(st==='free') counts.free++; else if(counts[st]!=null) counts[st]++; });
     return counts;
   }
@@ -4499,7 +4724,7 @@
       return (ord[a.state]??9)-(ord[b.state]??9);
     });
   }
-  const TABLE_STATUS_LABELS={ free:'Libre', occupied:'Occupée', bill:'Addition', paying:'En paiement', reserved:'Réservée' };
+  const TABLE_STATUS_LABELS={ free:'Libre', occupied:'Occupée', bill:'Addition', paying:'En paiement', reserved:'Réservée', dirty:'Sale', unavailable:'Non dispo.' };
   function ensureTableChecks(td) {
     if(!td) return { checks:[{ id:1, name:'Addition 1', tabName:'', cart:[], tipAmount:0 }], activeCheck:1 };
     if(!td.checks?.length) {
@@ -4525,6 +4750,7 @@
     saveState();
     if(currentScreen==='table') renderTables();
     if(currentScreen==='admin') buildAdmin();
+    if(currentScreen==='mode' && loggedRole==='server') renderServerDash();
     refreshModeCounts();
   }
   function tableSessionPatch() {
@@ -4549,7 +4775,7 @@
     const st=getTableState(k);
     const held=getTableHeldOrder(k);
     const hasActivity=cart.length>0||tabName||held||(getTableEntry(k)?.checks||[]).some(c=>c.cart?.length);
-    if(!hasActivity && st!=='reserved') {
+    if(!hasActivity && st!=='reserved' && st!=='dirty' && st!=='unavailable') {
       if(st==='occupied'||st==='paying'||st==='bill') setTableState(k,'free');
       return;
     }
@@ -4651,6 +4877,86 @@
       el.style.display=canAdmin?'':'none';
     });
     if(isServer) renderServerDash();
+    updateServerShiftBar();
+    updateTableServerBar();
+  }
+
+  function updateServerShiftBar() {
+    if(loggedRole!=='server') return;
+    const name=document.getElementById('srv-shift-name');
+    const role=document.getElementById('srv-shift-role');
+    const time=document.getElementById('srv-shift-time');
+    const pill=document.getElementById('srv-shift-pill');
+    const lbl=document.getElementById('srv-shift-lbl');
+    const btn=document.getElementById('srv-clock-btn');
+    const av=document.getElementById('srv-shift-avatar');
+    if(name) name.textContent=loggedUser||'Serveur';
+    if(role) role.textContent=loggedEmployee?.job||'Service salle';
+    if(av) av.textContent=(loggedUser||'S').charAt(0).toUpperCase();
+    if(pill) { pill.classList.toggle('on',clockedIn); pill.classList.toggle('off',!clockedIn); }
+    if(lbl) lbl.textContent=clockedIn?'En service':'Hors service';
+    if(btn) btn.textContent=clockedIn?'Clock Out':'Clock In';
+    if(time) {
+      const t=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+      if(clockedIn && activeShift?.start) {
+        const dur=fmtDuration(Date.now()-activeShift.start.getTime());
+        time.textContent='Shift depuis '+activeShift.in+' · '+dur+' · '+t;
+      } else {
+        time.textContent='Connecté à '+t+' — touchez Clock In pour démarrer';
+      }
+    }
+  }
+  function updateTableServerBar() {
+    const strip=document.getElementById('tbl-server-strip');
+    const isServer=loggedRole==='server';
+    if(strip) strip.classList.toggle('show', isServer);
+    if(!isServer) return;
+    const title=document.getElementById('tbl-topbar-title');
+    const sub=document.getElementById('tbl-topbar-sub');
+    if(title) title.textContent='Plan de salle';
+    if(sub) sub.textContent='Touchez une table pour prendre commande · '+loggedUser;
+    const name=document.getElementById('tbl-srv-name');
+    const shift=document.getElementById('tbl-srv-shift');
+    const pill=document.getElementById('tbl-srv-pill');
+    const btn=document.getElementById('tbl-srv-clock');
+    if(name) name.textContent=loggedUser||'Serveur';
+    if(pill) { pill.textContent=clockedIn?'En service':'Hors service'; pill.classList.toggle('on',clockedIn); pill.classList.toggle('off',!clockedIn); }
+    if(btn) btn.textContent=clockedIn?'Clock Out':'Clock In';
+    if(shift) {
+      if(clockedIn && activeShift?.start) {
+        shift.textContent='Shift · '+fmtDuration(Date.now()-activeShift.start.getTime());
+      } else {
+        shift.textContent='Connecté — démarrez votre shift';
+      }
+    }
+  }
+  function srvClockAction() {
+    if(clockedIn) clockOut();
+    else clockIn();
+    updateServerShiftBar();
+    updateTableServerBar();
+    renderServerDash();
+  }
+  function getServerStats() {
+    const serverName=loggedUser||'';
+    let sales=0, rev=0, tables=new Set();
+    paidOrders.forEach(o=>{
+      if(o.server && o.server!==serverName) return;
+      if(!o.server && serverName) return;
+      sales++;
+      rev+=o.total||0;
+      if(o.tableNum) tables.add(o.tableNum);
+    });
+    heldOrders.forEach(o=>{
+      if(o.server && o.server!==serverName) return;
+      if(o.tableNum) tables.add(o.tableNum);
+    });
+    const hours=(activeShift && activeShift.start && clockedIn)?fmtDuration(Date.now()-activeShift.start.getTime()):'0:00';
+    return { sales, rev, tables:tables.size, hours };
+  }
+  function openServerReport() {
+    openServiceReport();
+    toast('Rapport de service — '+loggedUser,'#084F8C');
   }
 
   let serverFloorFilter='all';
@@ -4660,7 +4966,9 @@
   }
   function renderServerDash() {
     if(loggedRole!=='server') return;
+    updateServerShiftBar();
     const counts=getTableCounts();
+    const stats=getServerStats();
     const set=(id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=v; };
     set('srv-kpi-open', heldOrders.length);
     set('srv-kpi-occ', counts.occupied+counts.bill+counts.paying);
@@ -4668,6 +4976,10 @@
     set('srv-kpi-pay', counts.paying);
     set('srv-open-sub', heldOrders.length?(heldOrders.length+' ouverte'+(heldOrders.length>1?'s':'')):'Aucune');
     set('srv-occ-sub', counts.free+' libres · '+TABLE_LAYOUT.length+' total');
+    set('srv-rpt-sales', stats.sales);
+    set('srv-rpt-rev', fmt(stats.rev));
+    set('srv-rpt-tables', stats.tables);
+    set('srv-rpt-hours', stats.hours);
     const floor=document.getElementById('srv-floor');
     if(floor) {
       let tables=TABLE_LAYOUT;
@@ -4677,10 +4989,12 @@
       } else {
         floor.innerHTML=tables.map(t=>{
           const st=getTableState(t.num);
+          const blocked=st==='dirty'||st==='unavailable';
           const total=(st==='occupied'||st==='bill'||st==='paying')?getTableOrderTotal(t.num):0;
           const entry=getTableEntry(t.num);
           const guest=entry?.tabName||'';
-          return `<button class="srv-tbl ${st}" onclick="openPOSFromTable(${t.num})" title="Ouvrir T${t.num}">
+          const click=blocked?'toast(\'Table '+TABLE_STATUS_LABELS[st]+' — indisponible\',\'#6b7280\')':`openPOSFromTable(${t.num})`;
+          return `<button class="srv-tbl ${st}" onclick="${click}" title="T${t.num} — ${TABLE_STATUS_LABELS[st]||'Libre'}">
             <div class="srv-tbl-num">T${t.num}</div>
             <div class="srv-tbl-st">${TABLE_STATUS_LABELS[st]||'Libre'}</div>
             ${guest?`<div class="srv-tbl-amt" style="color:#6a7a9a;font-weight:600;">${guest}</div>`:''}
@@ -4733,6 +5047,22 @@
     7:  { groups:[{ name:'Salade Options', opts:['Sans croûtons','Sauce à part','Extra parmesan'] }] },
     11: { groups:[{ name:'Sandwich Options', opts:['Sans tomate','Sans bacon','Extra sauce'] }] },
   };
+
+  const PRODUCT_IMAGES={
+    1:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&h=600&fit=crop&q=80',
+    2:'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800&h=600&fit=crop&q=80',
+    3:'https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=800&h=600&fit=crop&q=80',
+    4:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&h=600&fit=crop&q=80',
+    5:'https://images.unsplash.com/photo-1514434753130-a37f68e6c6e7?w=800&h=600&fit=crop&q=80',
+    6:'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&h=600&fit=crop&q=80',
+    7:'https://images.unsplash.com/photo-1546793665-c74683f339c1?w=800&h=600&fit=crop&q=80',
+    8:'https://images.unsplash.com/photo-1607958996333-41aef7caef51?w=800&h=600&fit=crop&q=80',
+    9:'https://images.unsplash.com/photo-1608270586650-53e8dd822f5c?w=800&h=600&fit=crop&q=80',
+    10:'https://images.unsplash.com/photo-1621506289937-a8e4df240d0e?w=800&h=600&fit=crop&q=80',
+    11:'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800&h=600&fit=crop&q=80',
+    12:'https://images.unsplash.com/photo-1505252587541-944859a8d252?w=800&h=600&fit=crop&q=80',
+  };
+  function getProductImage(p) { return p?.img||PRODUCT_IMAGES[p?.id]||''; }
 
   let products = [
     { id:1,  name:'Burger Gourmet',    price:12.90, stock:24, cat:'food', defaultCourse:2 },
@@ -4843,7 +5173,8 @@
     const now=new Date();
     activeShift={ date:fmtShiftDate(now), job:emp.job, in:fmtShiftTime(now), out:'—', hours:'—', start:now };
     enterApp(emp);
-    showScreen('mode');
+    if(emp.role==='server') openTableService();
+    else showScreen('mode');
   }
   function doLogin() { doTimeclock(); }
 
@@ -4905,6 +5236,8 @@
     renderShiftTable();
     renderClockActions(true);
     updatePosCheckinBar();
+    updateServerShiftBar();
+    updateTableServerBar();
     toast('Clock In — '+fmtShiftTime(now),'#084F8C');
   }
   function clockOut() {
@@ -4920,6 +5253,8 @@
     renderShiftTable();
     renderClockActions(false);
     updatePosCheckinBar();
+    updateServerShiftBar();
+    updateTableServerBar();
     toast('Clock Out — '+fmtShiftTime(now),'#084F8C');
   }
   function updatePosCheckinBar() {
@@ -4939,6 +5274,7 @@
       const t=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
       meta.textContent='Caisse 1 · '+t+(clockedIn?' · En service':'');
     }
+    updateServerShiftBar();
   }
   function posClockAction() {
     if(clockedIn) clockOut();
@@ -4948,13 +5284,8 @@
     toast('Pause démarrée','#084F8C');
   }
   function clockDone() {
-    if(clockedIn && loginIntent==='goin') {
-      showScreen('mode');
-    } else if(clockedIn) {
-      showScreen('mode');
-    } else {
-      showScreen('mode');
-    }
+    if(loggedRole==='server') { openTableService(); return; }
+    showScreen('mode');
   }
   function clockBack() {
     if(confirm('Retour à l\'écran de connexion ?')) doLogout();
@@ -4984,7 +5315,9 @@
       if(el) el.style.display = (s===name) ? 'flex' : 'none';
     });
     const hdr=document.getElementById('app-header');
-    if(hdr) hdr.style.display = (name==='clock'||name==='pos'||name==='payment'||name==='table'||name==='checks'||name==='kds'||name==='kiosk') ? 'none' : 'flex';
+    const hideHdr=name==='clock'||name==='pos'||name==='payment'||name==='checks'||name==='kds'||name==='kiosk';
+    const hideTableHdr=name==='table'&&loggedRole!=='server';
+    if(hdr) hdr.style.display=(hideHdr||hideTableHdr)?'none':'flex';
     document.getElementById('adm-btn')?.classList.toggle('on', name==='admin');
     if(name==='mode') { refreshModeCounts(); applyRoleUI(); }
     if(name==='checks') renderChecks();
@@ -4996,11 +5329,16 @@
     if(name==='report') renderServiceReport();
     if(name==='gift') renderGiftCards();
     if(name==='clock') { renderShiftTable(); renderClockActions(clockedIn); }
-    if(name==='table') renderTables();
+    if(name==='table') { renderTables(); updateTableServerBar(); }
     if(name==='pos'||name==='payment') updateOrderIndicators();
+  }
+  function tableBack() {
+    if(loggedRole==='server') openChecks('open');
+    else goHome();
   }
   function goHome() {
     if(currentScreen==='pos'||currentScreen==='payment') persistTableSession();
+    if(loggedRole==='server') { openTableService(); return; }
     showScreen('mode');
   }
   function openTableService() {
@@ -5008,9 +5346,76 @@
     renderTables();
     showScreen('table');
   }
+  function initTablePositions() {
+    const zoneIdx={ salle:0, terrasse:0, bar:0, vip:0 };
+    const zoneCols={ salle:5, terrasse:5, bar:1, vip:3 };
+    TABLE_LAYOUT.forEach(t=>{
+      if(tablePositions[t.num]) return;
+      const z=t.zone||'salle';
+      const idx=zoneIdx[z]||0;
+      const cols=zoneCols[z]||5;
+      const col=idx%cols, row=Math.floor(idx/cols);
+      const w=t.bar?100:105, h=t.bar?56:95;
+      tablePositions[t.num]={ x:col*w+12, y:row*h+40 };
+      zoneIdx[z]=idx+1;
+    });
+  }
+  function resetTableLayout() {
+    if(!confirm('Remettre le plan de salle en grille par défaut ?')) return;
+    tablePositions={};
+    tablePositionsCustom=false;
+    tableEditMode=false;
+    const btn=document.getElementById('tbl-pos-btn');
+    if(btn) { btn.classList.remove('on'); btn.textContent='Positionner tables'; }
+    saveState();
+    renderTables();
+    toast('Plan réinitialisé — grille par défaut','#084F8C');
+  }
+  function toggleTableEditMode() {
+    tableEditMode=!tableEditMode;
+    const btn=document.getElementById('tbl-pos-btn');
+    if(btn) { btn.classList.toggle('on',tableEditMode); btn.textContent=tableEditMode?'Terminer positionnement':'Positionner tables'; }
+    if(tableEditMode && !tablePositionsCustom) initTablePositions();
+    if(!tableEditMode && Object.keys(tablePositions).length) {
+      tablePositionsCustom=true;
+      saveState();
+    }
+    renderTables();
+    toast(tableEditMode?'Mode positionnement — glissez les tables':'Plan enregistré','#084F8C');
+  }
+  function bindTableDrag(el, num) {
+    if(!tableEditMode) return;
+    let startX,startY,origX,origY;
+    const onMove=(e)=>{
+      const dx=(e.clientX||e.touches?.[0]?.clientX)-startX;
+      const dy=(e.clientY||e.touches?.[0]?.clientY)-startY;
+      const pos=tablePositions[num]||{x:0,y:0};
+      tablePositions[num]={ x:Math.max(0,origX+dx), y:Math.max(0,origY+dy) };
+      el.style.left=tablePositions[num].x+'px';
+      el.style.top=tablePositions[num].y+'px';
+    };
+    const onUp=()=>{
+      el.classList.remove('dragging');
+      document.removeEventListener('mousemove',onMove);
+      document.removeEventListener('mouseup',onUp);
+      saveState();
+    };
+    const onDown=(e)=>{
+      e.preventDefault(); e.stopPropagation();
+      el.classList.add('dragging');
+      startX=e.clientX||e.touches?.[0]?.clientX;
+      startY=e.clientY||e.touches?.[0]?.clientY;
+      const pos=tablePositions[num]||{x:0,y:0};
+      origX=pos.x; origY=pos.y;
+      document.addEventListener('mousemove',onMove);
+      document.addEventListener('mouseup',onUp);
+    };
+    el.addEventListener('mousedown',onDown);
+  }
   function renderTables() {
     const zones={ salle:'', terrasse:'', bar:'', vip:'' };
     const counts=getTableCounts();
+    const usePos=tableEditMode||tablePositionsCustom;
     TABLE_LAYOUT.forEach(t=>{
       const st=getTableState(t.num);
       const entry=getTableEntry(t.num);
@@ -5019,7 +5424,11 @@
       const orderTotal=(st==='occupied'||st==='bill'||st==='paying')?getTableOrderTotal(t.num):0;
       const cls=[st!=='free'?st:'free', t.shape==='rect'?'rect':'', t.bar?'bar':'', t.vip?'vip':''].filter(Boolean).join(' ');
       const z=t.zone in zones ? t.zone : 'salle';
-      zones[z]+=`<button class="tbl-seat ${cls}" onclick="openPOSFromTable(${t.num})" oncontextmenu="event.preventDefault();toggleTableReserved(${t.num})">
+      const pos=tablePositions[t.num];
+      const posStyle=(usePos&&pos)?` style="left:${pos.x}px;top:${pos.y}px"`:'';
+      const blocked=st==='dirty'||st==='unavailable';
+      const click=tableEditMode?'':(blocked?`toast('Table ${TABLE_STATUS_LABELS[st]} — indisponible','#6b7280')`:`openPOSFromTable(${t.num})`);
+      zones[z]+=`<button class="tbl-seat ${cls}"${posStyle} data-tnum="${t.num}" ${tableEditMode?'':'onclick="'+click+'"'} oncontextmenu="event.preventDefault();cycleTableStatus(${t.num})">
         <div class="tbl-seat-unit">
           ${t.vip?'<span class="tbl-seat-vip-badge">VIP</span>':''}
           <span class="tbl-seat-num">T${t.num}</span>
@@ -5035,18 +5444,33 @@
     const zoneLbl={ salle:'Salle principale', terrasse:'Terrasse', bar:'Bar', vip:'Espace VIP' };
     ['salle','terrasse','bar','vip'].forEach(z=>{
       const el=document.getElementById('tbl-zone-'+z);
-      if(el) el.innerHTML='<span class="tbl-zone-label">'+zoneLbl[z]+'</span>'+zones[z];
+      if(el) {
+        el.classList.toggle('tbl-zone-pos', usePos);
+        el.innerHTML='<span class="tbl-zone-label">'+zoneLbl[z]+'</span>'+zones[z];
+        if(tableEditMode) el.querySelectorAll('.tbl-seat').forEach(seat=>{
+          const n=parseInt(seat.dataset.tnum,10);
+          if(n) bindTableDrag(seat,n);
+        });
+      }
     });
     const fe=document.getElementById('tbl-stat-free');
     const be=document.getElementById('tbl-stat-busy');
     const bile=document.getElementById('tbl-stat-bill');
     const pe=document.getElementById('tbl-stat-paying');
     const re=document.getElementById('tbl-stat-reserved');
+    const de=document.getElementById('tbl-stat-dirty');
+    const ue=document.getElementById('tbl-stat-unavail');
     if(fe) fe.textContent=counts.free+' libre'+(counts.free>1?'s':'');
     if(be) be.textContent=counts.occupied+' occupée'+(counts.occupied>1?'s':'');
     if(bile) bile.textContent=counts.bill+' addition'+(counts.bill>1?'s':'');
     if(pe) pe.textContent=counts.paying+' en paiement';
     if(re) re.textContent=counts.reserved+' réservée'+(counts.reserved>1?'s':'');
+    if(de) de.textContent=counts.dirty+' sale'+(counts.dirty>1?'s':'');
+    if(ue) ue.textContent=counts.unavailable+' indisponible'+(counts.unavailable>1?'s':'');
+    const rb=document.getElementById('tbl-reset-btn');
+    if(rb) rb.style.display=(tablePositionsCustom && ROLE_LEVEL[loggedRole]>=ROLE_LEVEL.manager)?'':'none';
+    updateTableServerBar();
+    if(loggedRole==='server') renderServerDash();
   }
   function getTableHeldOrder(num) {
     return heldOrders.find(o=>o.tableNum===num);
@@ -5190,15 +5614,24 @@
     renderTables();
     toast('Addition demandée — T'+currentTableNum+' passe en ORANGE','#ea580c');
   }
-  function toggleTableReserved(num) {
+  function cycleTableStatus(num) {
     const st=getTableState(num);
-    if(st==='free') setTableState(num,'reserved',{tabName:getTableEntry(num)?.tabName||''});
-    else if(st==='reserved') setTableState(num,'free');
-    else toast('Table occupée — impossible de réserver','#7a5500');
+    const canManage=ROLE_LEVEL[loggedRole]>=ROLE_LEVEL.manager;
+    if(!canManage) { toast('Statut table — manager uniquement','#7a5500'); return; }
+    if(st==='occupied'||st==='bill'||st==='paying') { toast('Table en service — impossible','#7a5500'); return; }
+    const cycle=['free','reserved','dirty','unavailable'];
+    const next=cycle[(cycle.indexOf(st)+1)%cycle.length];
+    if(next==='free') setTableState(num,'free');
+    else setTableState(num,next,{tabName:getTableEntry(num)?.tabName||''});
+    toast('T'+num+' → '+TABLE_STATUS_LABELS[next||'free'],'#084F8C');
+    renderTables();
   }
+  function toggleTableReserved(num) { cycleTableStatus(num); }
   function openPOSFromTable(num) {
     if(currentTableNum && currentTableNum!==num) persistTableSession();
     if(num) {
+      const st0=getTableState(num);
+      if(st0==='dirty'||st0==='unavailable') { toast('Table '+TABLE_STATUS_LABELS[st0]+' — indisponible','#6b7280'); return; }
       currentTableNum=num;
       const st=loadTableSession(num);
       diningIdx=1;
@@ -5351,7 +5784,27 @@
   }
   function setHubChannel(c) { hubChannel=c; renderOrdersHub(); }
 
-  function openKiosk() { kioskCart=[]; kioskCat='all'; showScreen('kiosk'); }
+  function openKiosk() {
+    kioskCart=[]; kioskCat='all'; kioskDining='dinein'; kioskStarted=false;
+    const wn=document.getElementById('kiosk-welcome-name');
+    if(wn) wn.textContent=restaurantConfig.name||'Bienvenue';
+    showScreen('kiosk');
+  }
+  function kioskStartDining(type) {
+    kioskDining=type;
+    kioskStarted=true;
+    const w=document.getElementById('kiosk-welcome');
+    if(w) w.classList.add('hide');
+    const badge=document.getElementById('kiosk-dining-badge');
+    if(badge) {
+      badge.textContent=type==='dinein'?'Sur place':'À emporter';
+      badge.classList.toggle('takeout', type==='takeout');
+    }
+    const wn=document.getElementById('kiosk-welcome-name');
+    if(wn) wn.textContent=restaurantConfig.name||'Bienvenue';
+    renderKiosk();
+    toast(type==='dinein'?'Commande sur place':'Commande à emporter','#D62300');
+  }
   function setKioskCat(cat, el) {
     kioskCat=cat;
     document.querySelectorAll('.kiosk-cat').forEach(b=>b.classList.remove('active'));
@@ -5369,23 +5822,29 @@
     if(cnt>=1){ /* ready to validate */ }
   }
   function renderKiosk() {
+    const welcome=document.getElementById('kiosk-welcome');
+    if(welcome) welcome.classList.toggle('hide', kioskStarted);
     const menu=document.getElementById('kiosk-menu');
     const title=document.getElementById('kiosk-welcome-title');
     const hero=document.getElementById('kiosk-hero-name');
     const cats=document.getElementById('kiosk-cats');
-    if(title) title.textContent='Votre commande';
+    if(title) title.textContent=kioskDining==='dinein'?'Sur place':'À emporter';
     if(hero) hero.textContent=restaurantConfig.name||'Mon Restaurant';
     if(cats) {
       const list=[['all','Tout'],['food','Plats'],['drinks','Boissons'],['desserts','Desserts']];
       cats.innerHTML=list.map(([c,l])=>`<button class="kiosk-cat${kioskCat===c?' active':''}" onclick="setKioskCat('${c}',this)">${l}</button>`).join('');
     }
+    if(!kioskStarted) return;
     const list=products.filter(p=>kioskCat==='all'||p.cat===kioskCat);
     if(menu) menu.innerHTML=list.map(p=>{
-      const letter=(p.name||'?').charAt(0).toUpperCase();
-      return `<button class="kiosk-item${p.stock<=5?' low-stock':''}" onclick="kioskAddItem(${p.id})">
-        <div class="kiosk-item-top" style="background:${p.color}18">
-          <span class="kiosk-item-letter" style="color:${p.color}">${letter}</span>
-          <span class="kiosk-item-add"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg></span>
+      const out=p.stock<=0;
+      const low=p.stock>0&&p.stock<=5;
+      const img=getProductImage(p);
+      return `<button class="kiosk-item${out?' unavail':''}" ${out?'disabled':`onclick="kioskAddItem(${p.id})"`}>
+        <div class="kiosk-item-img-wrap">
+          <img class="kiosk-item-img" src="${img}" alt="${p.name}" loading="lazy" onerror="this.style.background='#333'"/>
+          ${out?'<span class="kiosk-item-badge out">Non disponible</span>':low?'<span class="kiosk-item-badge low">Stock bas</span>':''}
+          ${out?'':`<span class="kiosk-item-add-fab"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg></span>`}
         </div>
         <div class="kiosk-item-body">
           <div class="kiosk-item-name">${p.name}</div>
@@ -5397,7 +5856,7 @@
     updateKioskCart();
   }
   function kioskAddItem(id) {
-    const p=products.find(x=>x.id===id); if(!p) return;
+    const p=products.find(x=>x.id===id); if(!p||p.stock<=0) { toast('Produit non disponible','#6b7280'); return; }
     const ex=kioskCart.find(i=>i.id===id);
     if(ex) ex.qty++; else kioskCart.push({id:p.id,name:p.name,price:p.price,qty:1,cat:p.cat});
     updateKioskCart();
@@ -5457,12 +5916,28 @@
     if(!kioskCart.length){ toast('Sélectionnez des produits','#7a5500'); return; }
     const sub=kioskCart.reduce((s,i)=>s+i.price*i.qty,0);
     const {ttc}=calcTtc(sub);
+    const te=document.getElementById('kiosk-confirm-total');
+    const ie=document.getElementById('kiosk-confirm-items');
+    const ov=document.getElementById('kiosk-confirm');
+    if(te) te.textContent=fmt(ttc);
+    if(ie) ie.innerHTML=kioskCart.map(i=>`${i.qty}× ${i.name} — ${fmt(i.price*i.qty)}`).join('<br>');
+    if(ov) ov.classList.add('show');
+  }
+  function closeKioskConfirm() {
+    document.getElementById('kiosk-confirm')?.classList.remove('show');
+  }
+  function kioskConfirmOrder() {
+    if(!kioskCart.length){ closeKioskConfirm(); return; }
+    const sub=kioskCart.reduce((s,i)=>s+i.price*i.qty,0);
+    const {ttc}=calcTtc(sub);
     const num='#'+String(orderN).padStart(4,'0');
     const items=kioskCart.map(i=>({...i}));
-    heldOrders.unshift({ id:Date.now(), num, total:ttc, count:items.reduce((s,i)=>s+i.qty,0), cart:items, items:items.map(i=>({name:i.name,qty:i.qty,price:i.price})), time:new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}), source:'Kiosk', tabName:'Kiosk' });
+    const diningLbl=kioskDining==='dinein'?'Sur place':'À emporter';
+    heldOrders.unshift({ id:Date.now(), num, total:ttc, count:items.reduce((s,i)=>s+i.qty,0), cart:items, items:items.map(i=>({name:i.name,qty:i.qty,price:i.price})), time:new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}), source:'Kiosk', tabName:'Kiosk · '+diningLbl, dining:kioskDining });
     pushToKitchen(items.map(i=>({displayName:i.name,qty:i.qty})), num);
     orderN++; kioskCart=[]; updateTicketDisplay(orderN);
     updateKioskCart(); refreshModeCounts(); saveState();
+    closeKioskConfirm();
     toast('Kiosk '+num+' — envoyée en cuisine','#15803d');
     openKDS();
   }
@@ -7206,8 +7681,16 @@
     }
   });
 
+  function seedTableDemo() {
+    if(localStorage.getItem('pos_table_demo')) return;
+    setTableState(5,'dirty',{tabName:''});
+    setTableState(8,'unavailable',{tabName:''});
+    localStorage.setItem('pos_table_demo','1');
+  }
+
   // ─── INIT ─────────────────────────────────────────────────────────────────
   loadState();
+  seedTableDemo();
   seedOnlineOrders();
   updatePinDots(false);
   renderCart();

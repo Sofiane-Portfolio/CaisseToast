@@ -1,0 +1,108 @@
+<UserControl x:Class="CaisseToast.Wpf.Views.OnlineOrderingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource Brush.Background}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Background="{StaticResource Brush.HeaderGradient}" Padding="24,14">
+            <Grid>
+                <StackPanel>
+                    <TextBlock Text="Online Ordering" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock Text="Uber Eats · Deliveroo · Web · Takeout" FontSize="11" Foreground="#D1EFFE" Margin="0,4,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Simuler commande" Style="{StaticResource Btn.HeaderGhost}" Margin="0,0,8,0" Command="{Binding SimulateNewOrderCommand}"/>
+                    <Button Content="Retour" Style="{StaticResource Btn.HeaderGhost}" Command="{Binding GoBackCommand}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="1" Background="White" Padding="20,12" BorderBrush="#140B128C" BorderThickness="0,0,0,1">
+            <UniformGrid Columns="4">
+                <Border Style="{StaticResource KpiCard}" Margin="4">
+                    <StackPanel>
+                        <TextBlock Text="{Binding PendingCount}" FontSize="22" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}"/>
+                        <TextBlock Text="À traiter" FontSize="10" Foreground="{StaticResource Brush.Muted}"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource KpiCard}" Margin="4">
+                    <StackPanel>
+                        <TextBlock Text="{Binding AcceptedCount}" FontSize="22" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}"/>
+                        <TextBlock Text="En cuisine" FontSize="10" Foreground="{StaticResource Brush.Muted}"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource KpiCard}" Margin="4">
+                    <StackPanel>
+                        <TextBlock Text="{Binding ReadyCount}" FontSize="22" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}"/>
+                        <TextBlock Text="Prêtes" FontSize="10" Foreground="{StaticResource Brush.Muted}"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource KpiCard}" Margin="4">
+                    <StackPanel>
+                        <TextBlock Text="{Binding TodayCount}" FontSize="22" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}"/>
+                        <TextBlock Text="Aujourd'hui" FontSize="10" Foreground="{StaticResource Brush.Muted}"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+        </Border>
+        <Grid Grid.Row="2" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                <Button Content="À traiter" Margin="0,0,8,0" Padding="14,8" Command="{Binding SelectTabCommand}" CommandParameter="pending"/>
+                <Button Content="En cuisine" Margin="0,0,8,0" Padding="14,8" Command="{Binding SelectTabCommand}" CommandParameter="accepted"/>
+                <Button Content="Prêtes" Margin="0,0,8,0" Padding="14,8" Command="{Binding SelectTabCommand}" CommandParameter="ready"/>
+                <Button Content="Toutes" Padding="14,8" Command="{Binding SelectTabCommand}" CommandParameter="all"/>
+            </StackPanel>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Orders}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="White" CornerRadius="14" BorderBrush="#140B128C" BorderThickness="1" Padding="16" Margin="0,0,0,10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Customer}" FontWeight="Bold" FontSize="15" Foreground="{StaticResource Brush.Navy}"/>
+                                            <Border Background="#F8FBFF" CornerRadius="6" Padding="6,3" Margin="10,0,0,0">
+                                                <TextBlock Text="{Binding Channel}" FontSize="10" FontWeight="Bold" Foreground="{StaticResource Brush.Blue}"/>
+                                            </Border>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding ItemsSummary}" FontSize="12" Foreground="{StaticResource Brush.Muted}" Margin="0,6,0,0" TextWrapping="Wrap"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                                            <TextBlock Text="{Binding StatusLabel}" FontSize="10" FontWeight="Bold" Foreground="{StaticResource Brush.Blue}"/>
+                                            <TextBlock Text="{Binding Time, StringFormat= · {0}}" FontSize="10" Foreground="{StaticResource Brush.Muted}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding TotalLabel}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Right"/>
+                                        <Button Content="Accepter" Style="{StaticResource Btn.Primary}" Margin="0,8,0,0" Padding="12,6"
+                                                Command="{Binding DataContext.AcceptOrderCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding}"
+                                                Visibility="{Binding CanAccept, Converter={StaticResource BoolToVis}}"/>
+                                        <Button Content="Prête" Margin="0,8,0,0" Padding="12,6"
+                                                Command="{Binding DataContext.MarkReadyCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding}"
+                                                Visibility="{Binding CanMarkReady, Converter={StaticResource BoolToVis}}"/>
+                                        <Button Content="Refuser" Margin="0,8,0,0" Padding="12,6"
+                                                Command="{Binding DataContext.RejectOrderCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding}"
+                                                Visibility="{Binding CanReject, Converter={StaticResource BoolToVis}}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,212 @@
+<UserControl x:Class="CaisseToast.Wpf.Views.KioskView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:CaisseToast.Wpf.ViewModels"
+             Background="#1A1A1A">
+    <Grid>
+        <!-- Welcome -->
+        <Grid Visibility="{Binding ShowWelcome, Converter={StaticResource BoolToVis}}">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#1A1A1A" Offset="0"/>
+                    <GradientStop Color="#2D1810" Offset="0.5"/>
+                    <GradientStop Color="#1A1A1A" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="720">
+                <Border Width="72" Height="72" CornerRadius="20" HorizontalAlignment="Center" Margin="0,0,0,20">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#D62300" Offset="0"/>
+                            <GradientStop Color="#FF6B35" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <TextBlock Text="K" Foreground="White" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="{Binding RestaurantName}" FontSize="40" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBlock Text="Touchez pour commencer votre commande" FontSize="16" Foreground="#B3FFFFFF" HorizontalAlignment="Center" Margin="0,10,0,40"/>
+                <UniformGrid Columns="2" Margin="20,0">
+                    <Button Margin="10" Command="{Binding StartDineInCommand}" Cursor="Hand">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border CornerRadius="24" Padding="30" Background="#D62300">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="Sur place" FontSize="22" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Manger au restaurant" FontSize="12" Foreground="#FFEDD5" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Margin="10" Command="{Binding StartTakeOutCommand}" Cursor="Hand">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border CornerRadius="24" Padding="30" Background="{StaticResource Brush.HeaderGradient}">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="À emporter" FontSize="22" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Sac à emporter" FontSize="12" Foreground="#D1EFFE" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </UniformGrid>
+            </StackPanel>
+        </Grid>
+
+        <!-- Main kiosk -->
+        <Grid Visibility="{Binding ShowWelcome, Converter={StaticResource InverseBoolToVis}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="340"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Cart sidebar -->
+            <Border Grid.Column="0" Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Background="{StaticResource Brush.HeaderGradient}" Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="Votre commande" FontSize="20" FontWeight="Bold" Foreground="White"/>
+                            <TextBlock Text="{Binding CartSummary}" Foreground="#D1EFFE" FontSize="11" Margin="0,4,0,0"/>
+                            <TextBlock Text="{Binding DiningBadge}" Foreground="#FF8A65" FontSize="10" FontWeight="Bold" Margin="0,8,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding CartLines}" Margin="8">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:KioskCartLineViewModel}">
+                                    <Border BorderBrush="#F0F0F0" BorderThickness="0,0,0,1" Padding="12,10">
+                                        <Grid>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}"/>
+                                                <TextBlock Text="{Binding LineTotalLabel}" FontSize="11" Foreground="{StaticResource Brush.Muted}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button Content="−" Width="28" Height="28" Command="{Binding DataContext.DecreaseQtyCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                                <TextBlock Text="{Binding Quantity}" Width="24" TextAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                                                <Button Content="+" Width="28" Height="28" Command="{Binding DataContext.IncreaseQtyCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <Border Grid.Row="2" Padding="18" BorderBrush="#EEE" BorderThickness="0,1,0,0">
+                        <StackPanel>
+                            <Grid Margin="0,2"><TextBlock Text="Sous-total HT" Foreground="{StaticResource Brush.Muted}"/><TextBlock Text="{Binding SubtotalLabel}" HorizontalAlignment="Right"/></Grid>
+                            <Grid Margin="0,2"><TextBlock Text="TVA" Foreground="{StaticResource Brush.Muted}"/><TextBlock Text="{Binding TaxLabel}" HorizontalAlignment="Right"/></Grid>
+                            <Grid Margin="0,8"><TextBlock Text="Total TTC" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}" FontSize="16"/><TextBlock Text="{Binding TotalLabel}" HorizontalAlignment="Right" FontWeight="Bold" FontSize="16" Foreground="{StaticResource Brush.Navy}"/></Grid>
+                            <Button Content="Commander" Style="{StaticResource Btn.Primary}" Margin="0,12,0,0" Height="48"
+                                    Command="{Binding SubmitOrderCommand}" IsEnabled="{Binding CanOrder}"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Menu -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Background="#1A1A1A" BorderBrush="#D62300" BorderThickness="0,0,0,2" Padding="24,14">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="42" Height="42" CornerRadius="12" Background="#D62300" Margin="0,0,12,0">
+                                <TextBlock Text="K" Foreground="White" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Commande" FontSize="17" FontWeight="Bold" Foreground="White"/>
+                                <TextBlock Text="Touchez un produit · paiement au comptoir" Foreground="#88FFFFFF" FontSize="11"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button Content="Retour" Style="{StaticResource Btn.HeaderGhost}" HorizontalAlignment="Right" Command="{Binding GoBackCommand}"/>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="1" Background="#222" Padding="20,12">
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock Text="{Binding RestaurantName}" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                            <TextBlock Text="Choisissez vos produits" Foreground="#88FFFFFF" FontSize="11"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Content="Tout" Margin="4,0" Padding="14,8" Command="{Binding SelectCategoryCommand}" CommandParameter="all">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource Btn.HeaderGhost}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SelectedCategory}" Value="all"><Setter Property="Background" Value="#D62300"/></DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                            <Button Content="Plats" Margin="4,0" Padding="14,8" Command="{Binding SelectCategoryCommand}" CommandParameter="food" Style="{StaticResource Btn.HeaderGhost}"/>
+                            <Button Content="Boissons" Margin="4,0" Padding="14,8" Command="{Binding SelectCategoryCommand}" CommandParameter="drinks" Style="{StaticResource Btn.HeaderGhost}"/>
+                            <Button Content="Desserts" Margin="4,0" Padding="14,8" Command="{Binding SelectCategoryCommand}" CommandParameter="desserts" Style="{StaticResource Btn.HeaderGhost}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Padding="20">
+                    <ItemsControl ItemsSource="{Binding Products}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:KioskProductViewModel}">
+                                <Button Width="260" Margin="8" Command="{Binding DataContext.AddProductCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Cursor="Hand">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border CornerRadius="20" Background="#2A2A2A" ClipToBounds="True">
+                                                <StackPanel>
+                                                    <Grid Height="180">
+                                                        <Image Source="{Binding ImageUrl}" Stretch="UniformToFill"/>
+                                                        <Border Background="#66000000" VerticalAlignment="Bottom" Height="60"/>
+                                                        <TextBlock Text="STOCK BAS" Visibility="{Binding IsLowStock, Converter={StaticResource BoolToVis}}"
+                                                                   Background="#FEF3C7" Foreground="#B45309" FontSize="9" FontWeight="Bold"
+                                                                   Padding="6,3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8"/>
+                                                        <TextBlock Text="NON DISPONIBLE" Visibility="{Binding IsUnavailable, Converter={StaticResource BoolToVis}}"
+                                                                   Background="#FEE2E2" Foreground="#DC2626" FontSize="9" FontWeight="Bold"
+                                                                   Padding="6,3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8"/>
+                                                    </Grid>
+                                                    <StackPanel Margin="16,12,16,16">
+                                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" Foreground="White"/>
+                                                        <TextBlock Text="{Binding CategoryLabel}" FontSize="9" Foreground="#88FFFFFF" Margin="0,4,0,0"/>
+                                                        <TextBlock Text="{Binding PriceLabel}" FontSize="20" FontWeight="Bold" Foreground="#FF8A65" Margin="0,8,0,0"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+
+        <!-- Confirm overlay -->
+        <Border Background="#730B128C" Visibility="{Binding ShowConfirm, Converter={StaticResource BoolToVis}}">
+            <Border Background="White" CornerRadius="18" Padding="24" MaxWidth="420" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Text="Confirmer la commande ?" FontSize="18" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}"/>
+                    <TextBlock Text="Vérifiez votre panier avant envoi en cuisine" Foreground="{StaticResource Brush.Muted}" Margin="0,6,0,12"/>
+                    <TextBlock Text="{Binding ConfirmTotalLabel}" FontSize="28" FontWeight="Bold" Foreground="{StaticResource Brush.Blue}"/>
+                    <TextBlock Text="{Binding ConfirmItemsText}" Foreground="{StaticResource Brush.Muted}" FontSize="11" Margin="0,8,0,16" TextWrapping="Wrap"/>
+                    <UniformGrid Columns="2">
+                        <Button Content="Annuler" Margin="0,0,6,0" Style="{StaticResource HeroTile}" Command="{Binding CancelConfirmCommand}"/>
+                        <Button Content="Confirmer" Margin="6,0,0,0" Style="{StaticResource Btn.Primary}" Command="{Binding ConfirmOrderCommand}"/>
+                    </UniformGrid>
+                </StackPanel>
+            </Border>
+        </Border>
+    </Grid>
+</UserControl>

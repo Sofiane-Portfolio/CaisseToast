@@ -1,62 +1,58 @@
 # CaisseToast WPF — Light Banana POS
 
-Application Windows native (.NET 8 + WPF) migrée depuis la version web `index.html`.
+Application Windows native (.NET 8 + WPF), port complet depuis `index.html`.
 
 ## Prérequis
 
 - **Windows 10/11**
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- Visual Studio 2022 (workload **Développement .NET desktop**) ou Rider
+- Visual Studio 2022 ou Rider
 
-> WPF ne compile et ne s'exécute **que sur Windows**. Sur Mac, tu peux éditer le code mais il faut builder sur un PC Windows.
+> WPF ne compile et ne s'exécute **que sur Windows**.
 
-## Lancer le projet
+## Lancer
 
 ```bash
 cd CaisseToast.Wpf
-dotnet restore
-dotnet build
-dotnet run
+dotnet restore && dotnet build && dotnet run
 ```
-
-Ou ouvrir `CaisseToast.sln` dans Visual Studio et F5.
 
 ## Connexion démo
 
-| PIN  | Rôle        |
-|------|-------------|
-| 1234 | Manager     |
-| 0000 | Admin       |
-| 1111 | Caissier    |
-| 2222 | Serveur     |
+| PIN  | Rôle     | Accès |
+|------|----------|-------|
+| 1234 | Manager  | Tout + Admin + positionnement tables |
+| 0000 | Admin    | Tout + Admin |
+| 1111 | Caissier | Accueil, POS, Terminal, KDS |
+| 2222 | Serveur  | Plan de salle direct + shift |
+
+## Modules
+
+### Phase 1–3
+Login, Accueil KPI, Quick Order/POS, Table Service, Payment Terminal, KDS, Kiosk, Orders Hub, Admin, rapport serveur
+
+### Phase 4
+- **SQLite** — persistance auto dans `%LocalAppData%/CaisseToast/pos.sqlite`
+- **Positionnement tables** — manager → « Positionner tables » → drag & drop → « Réinitialiser grille »
+- **Online Ordering** — Uber Eats / Web / Deliveroo, accepter / prête / refuser, simuler commande
+- **Modificateurs POS** — Burger, Pizza, Café, Smoothie avec options personnalisées
+
+## Test rapide Phase 4
+
+1. Manager `1234` → Table Service → **Positionner tables** → déplacer T3 → terminer
+2. Quick Order → Burger Gourmet → choisir modificateurs → envoyer cuisine
+3. Accueil → **Online Ordering** → Accepter → Prête
+4. Relancer l'app → les données sont restaurées depuis SQLite
 
 ## Structure
 
 ```
 CaisseToast.Wpf/
-├── Models/          Employee, rôles, écrans
-├── Services/        Auth, Navigation
-├── ViewModels/      MVVM (CommunityToolkit.Mvvm)
-├── Views/           Login, Accueil, Header
-├── Themes/          Palette Light Banana navy
-└── Converters/      Bindings WPF
+├── Models/          Commandes, tables, snapshot
+├── Services/        Auth, Navigation, PosState, PosStorage, PosLaunch
+├── ViewModels/
+├── Views/
+└── Themes/
 ```
 
-## Déjà implémenté (Phase 1)
-
-- Thème Light Banana (`#0B128C`, `#084F8C`, `#d1effe`)
-- Écran login avec numpad PIN
-- Header POS (date, employé, ticket, caisse)
-- Dashboard accueil (KPI + tuiles hero + canaux)
-- Navigation MVVM + placeholders pour modules à venir
-
-## Prochaines phases
-
-1. **POS Quick Order** — catalogue, panier, paiement
-2. **Table Service** — plan de salle
-3. **Payment Terminal** — open/paid/closed
-4. **Kitchen Display**
-5. **Admin** — catalogue, stocks, rapports
-6. **SQLite** — persistance locale
-
-La version web `index.html` reste la référence fonctionnelle pendant la migration.
+La version web `index.html` reste utilisable sur Mac en parallèle.

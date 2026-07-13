@@ -22,12 +22,25 @@ public partial class App : Application
 
     private static void ConfigureServices(IServiceCollection services)
     {
+        services.AddSingleton<IPosStorageService, PosStorageService>();
         services.AddSingleton<IAuthService, AuthService>();
+        services.AddSingleton<IPosStateService, PosStateService>();
+        services.AddSingleton<IPosLaunchService, PosLaunchService>();
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<ShellHeaderViewModel>();
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<LoginViewModel>();
         services.AddSingleton<HomeViewModel>();
+        services.AddSingleton<PosViewModel>();
+        services.AddSingleton<TableServiceViewModel>();
+        services.AddSingleton<TerminalViewModel>();
+        services.AddSingleton<KitchenViewModel>();
+        services.AddSingleton<KioskViewModel>();
+        services.AddSingleton<OrdersHubViewModel>();
+        services.AddSingleton<AdminViewModel>();
+        services.AddSingleton<ServerOrdersViewModel>();
+        services.AddSingleton<ServerReportViewModel>();
+        services.AddSingleton<OnlineOrderingViewModel>();
         services.AddSingleton<MainWindow>();
     }
 }

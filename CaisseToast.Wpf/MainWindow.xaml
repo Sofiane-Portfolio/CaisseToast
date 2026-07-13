@@ -16,7 +16,7 @@
 
         <v:ShellHeader Grid.Row="0"
                        DataContext="{Binding Header}"
-                       Visibility="{Binding Header.IsAuthenticated, Converter={StaticResource BoolToVis}}"/>
+                       Visibility="{Binding ShowShellHeader, Converter={StaticResource BoolToVis}}"/>
 
         <ContentControl Grid.Row="1"
                         Content="{Binding CurrentView}"

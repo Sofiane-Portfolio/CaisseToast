@@ -1,0 +1,46 @@
+<UserControl x:Class="CaisseToast.Wpf.Views.ServerOrdersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource Brush.Background}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Background="{StaticResource Brush.HeaderGradient}" Padding="24,14">
+            <Grid>
+                <StackPanel>
+                    <TextBlock Text="Mes commandes" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock Text="{Binding ServerName}" FontSize="11" Foreground="#D1EFFE" Margin="0,4,0,0"/>
+                </StackPanel>
+                <Button Content="Plan de salle" Style="{StaticResource Btn.HeaderGhost}" HorizontalAlignment="Right" Command="{Binding GoBackCommand}"/>
+            </Grid>
+        </Border>
+        <ScrollViewer Grid.Row="1" Padding="24" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="{Binding OrderCount, StringFormat={}{0} commande(s) ouverte(s)}" FontWeight="Bold" Foreground="{StaticResource Brush.Navy}" Margin="0,0,0,16"/>
+                <ItemsControl ItemsSource="{Binding Orders}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="White" CornerRadius="14" BorderBrush="#140B128C" BorderThickness="1" Padding="16" Margin="0,0,0,10">
+                                <Grid>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Number}" FontWeight="Bold" FontSize="16" Foreground="{StaticResource Brush.Navy}"/>
+                                        <TextBlock Text="{Binding DisplayName}" Margin="0,4,0,0"/>
+                                        <TextBlock Text="{Binding Meta}" FontSize="11" Foreground="{StaticResource Brush.Muted}"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding TotalLabel}" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                        <Button Content="Reprendre" Style="{StaticResource Btn.Primary}" Margin="0,8,0,0" Padding="12,6"
+                                                Command="{Binding DataContext.ResumeOrderCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
